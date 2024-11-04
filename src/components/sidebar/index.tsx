@@ -10,36 +10,36 @@ import Reports from "@/components/reports";
 import MenuItems from "@/components/home/menuitems";
 const SideBar = () => {
   return (
-    <Tabs defaultValue="home" className="w-full h-screen flex">
-      <TabsList className="w-[270px]  flex-col items-start h-full bg-[#0C1222]  ">
+    <Tabs defaultValue="home" className=" w-full h-screen flex">
+      <TabsList className="w-[270px]  flex-col items-start h-full bg-primary  ">
         <HeaderSideBar />
-        <ItemsSideBar />
+          <ItemsSideBar />
         <FooterSideBar />
       </TabsList>
       <div className="flex-grow">
-      <TabsContent value="home" className="h-full">
-          <Card className="h-full">
+      <TabsContent value="home" className=" h-full">
+          <Card className="bg-secondary border-none h-full">
             <CardContent className="h-full">
               <MenuItems />
             </CardContent>
           </Card>
         </TabsContent>
         <TabsContent value="incomesexpenses" className="h-full">
-          <Card className="h-full">
+          <Card className="bg-secondary border-none h-full">
             <CardContent className="p-6">
               <IncomesExpenses />
             </CardContent>
           </Card>
         </TabsContent>
         <TabsContent value="users" className="h-full">
-          <Card className="h-full">
+          <Card className="bg-secondary border-none h-full">
             <CardContent className="p-6">
               <Users />
             </CardContent>
           </Card>
         </TabsContent>
         <TabsContent value="reports" className="h-full">
-          <Card className="h-full">
+          <Card className="bg-secondary border-none h-full">
             <CardContent className="p-6">
               <Reports />
             </CardContent>
