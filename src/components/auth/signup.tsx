@@ -9,6 +9,8 @@ interface UserForm {
   role: string;
 }
 import { Button } from "../ui/button";
+
+
 const SignUpPage: React.FC = () => {
   const [form, setForm] = useState<UserForm>({
     name: "",
@@ -73,11 +75,23 @@ const SignUpPage: React.FC = () => {
           <h1 className="text-slate-600 text-2xl font-bold my-6 flex justify-center">
             Registrarme
           </h1>
+          
+          
+          
+          
           <form onSubmit={handleSubmit}>
+            
+            
+            
             <div className="w-full flex flex-col gap-2">
+              
+              
               <label className="font-semibold text-xs text-gray-400">
                 Name:
               </label>
+
+
+
               <input
                 placeholder="Usuario"
                 className="text-slate-600 border rounded-lg px-3 py-2 mb-5 text-sm w-full outline-none dark:border-gray-500 dark:bg-gray-900"
@@ -88,6 +102,9 @@ const SignUpPage: React.FC = () => {
                 required
               />
             </div>
+
+
+
 
             <div className="w-full flex flex-col gap-2">
               <label className="font-semibold text-xs text-gray-400">
@@ -104,6 +121,8 @@ const SignUpPage: React.FC = () => {
               />
             </div>
 
+
+
             <div className="w-full flex flex-col gap-2">
               <label className="font-semibold text-xs text-gray-400">
                 Phone:
@@ -117,6 +136,9 @@ const SignUpPage: React.FC = () => {
                 onChange={handleChange}
               />
             </div>
+
+
+
 
             <div className="w-full flex flex-col gap-2">
               <label className="font-semibold text-xs text-gray-400">
@@ -137,6 +159,14 @@ const SignUpPage: React.FC = () => {
               Create
             </Button>
           </form>
+
+
+
+
+
+
+
+
         </div>
       </div>
     </div>

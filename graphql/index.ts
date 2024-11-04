@@ -11,6 +11,7 @@ interface UserArgs {
   email?: string;
   phone?: string;
   role?: string;
+  password?: string;
 }
 
 interface TransactionArgs {
@@ -28,6 +29,7 @@ export const typeDefs = gql`
     email: String!
     phone: String
     role: String!
+    password: String!
   }
 
   type Transaction {
@@ -51,6 +53,7 @@ export const typeDefs = gql`
       email: String!
       phone: String
       role: String!
+      password: String!
     ): User
     updateUser(
       id: ID!
@@ -58,6 +61,7 @@ export const typeDefs = gql`
       email: String
       phone: String
       role: String
+      password: String
     ): User
     deleteUser(id: ID!): Boolean
 
@@ -83,13 +87,15 @@ export const CREATE_USER = gql`
     $email: String!
     $phone: String
     $role: String!
+    $password: String!
   ) {
-    createUser(name: $name, email: $email, phone: $phone, role: $role) {
+    createUser(name: $name, email: $email, phone: $phone, role: $role, password: $password) {
       id
       name
       email
       phone
       role
+      password
     }
   }
 `;
@@ -209,12 +215,12 @@ export const resolvers = {
   Mutation: {
     createUser: async (
       _: unknown,
-      { name, email, phone, role }: UserArgs,
+      { name, email, phone, role, password }: UserArgs,
       { supabaseClient }: Context
     ) => {
       const { data, error } = await supabaseClient
         .from("users")
-        .insert([{ name, email, phone, role }])
+        .insert([{ name, email, phone, role, password }])
         .select()
         .single();
       if (error) throw new Error(error.message);
