@@ -37,7 +37,6 @@ const CreateTransactionForm: React.FC = () => {
     type: "ingreso",
     amount: 0,
     date: "",
-    description: "",
   });
 
   useEffect(() => {
@@ -64,7 +63,7 @@ const CreateTransactionForm: React.FC = () => {
           type: form.type,
           amount: parseFloat(form.amount.toString()),
           date: form.date,
-          description: form.description,
+         
         },
       });
       Swal.fire({
@@ -80,7 +79,6 @@ const CreateTransactionForm: React.FC = () => {
           type: "ingreso",
           amount: 0,
           date: "",
-          description: "",
         });
       }
     } catch (err) {

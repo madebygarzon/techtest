@@ -1,12 +1,21 @@
 import React, { useState } from "react";
-import { MailIcon, PassIcon, GitHubIcon, TwitterIcon } from "../ui/icons";
+import {
+  MailIcon,
+  PassIcon,
+  GitHubIcon,
+  TwitterIcon,
+  NameInputIcon,
+  PhoneIcon,
+  VisibilityIcon,
+  VisibilityOffIcon,
+} from "../ui/icons";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Swal from "sweetalert2";
 import { useMutation } from "@apollo/client";
 import { CREATE_USER } from "../../../graphql/index";
-import bcrypt from 'bcryptjs';
+import bcrypt from "bcryptjs";
 
 interface UserForm {
   name: string;
@@ -14,6 +23,7 @@ interface UserForm {
   phone?: string;
   role: string;
   password: string;
+  confirmPassword: string;
 }
 const LoginForm: React.FC = () => {
   const [form, setForm] = useState<UserForm>({
@@ -22,29 +32,46 @@ const LoginForm: React.FC = () => {
     phone: "",
     role: "Usuario",
     password: "",
+    confirmPassword: "",
   });
 
+  const [passwordError, setPasswordError] = useState("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const initialFormState = {
     name: "",
     email: "",
     phone: "",
     role: "Usuario",
     password: "",
+    confirmPassword: "",
   };
 
-  const [createUser, { loading, error }] = useMutation(CREATE_USER);
+  const [createUser, { loading }] = useMutation(CREATE_USER);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+    setForm((prevForm) => ({
+      ...prevForm,
+      [name]: value,
+    }));
+
+    if (name === "confirmPassword" || name === "password") {
+      setPasswordError(
+        form.password !== value && name === "confirmPassword"
+          ? "Las contraseñas no coinciden"
+          : ""
+      );
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (form.password !== form.confirmPassword) {
+      setPasswordError("Las contraseñas no coinciden");
+      return;
+    }
     try {
       const hashedPassword = await bcrypt.hash(form.password, 10);
       await createUser({
@@ -58,18 +85,27 @@ const LoginForm: React.FC = () => {
       });
       Swal.fire({
         icon: "success",
-        title: "¡Usuario creado exitosamente!",
+        title: "¡Te has registrado exitosamente!",
+        text: `${form.name}, ya tienes acceso a la plataforma.`,
         showConfirmButton: false,
         timer: 4000,
       });
       setForm(initialFormState);
     } catch (err) {
       console.error("Error creating user:", err);
+      const errorMessage =
+        err instanceof Error ? err.message : "Ocurrió un error desconocido";
+      const isDuplicateEmailError = errorMessage.includes(
+        'duplicate key value violates unique constraint "users_email_key"'
+      );
+
       Swal.fire({
         icon: "error",
-        title: "Error",
-        text:
-          err instanceof Error ? err.message : "Ocurrió un error desconocido",
+        title: "El registro ha fallado",
+        text: isDuplicateEmailError
+          ? `El correo: ${form.email} ya está registrado`
+          : errorMessage,
+        timer: 4000,
       });
     }
   };
@@ -136,18 +172,25 @@ const LoginForm: React.FC = () => {
                   <PassIcon />
                 </span>
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   name="password"
                   id="password"
                   placeholder="••••••••••"
                   className="pl-12 mb-2 bg-transparent text-[#e0e0e0] border border-gray-300 sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block w-full p-2.5 py-3 px-4"
                   autoComplete="new-password"
                 />
+                <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400"
+                  >
+                    {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                  </button>
               </div>
             </div>
             <Button
               type="submit"
-              className="w-32 mx-auto text-[#FFFFFF] bg-[#4F46E5] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-6"
+              className="w-32 mx-auto text-[#FFFFFF]  focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-6"
             >
               Ingresar
             </Button>
@@ -161,15 +204,15 @@ const LoginForm: React.FC = () => {
           </div>
           <form>
             <div className="flex flex-row gap-2 justify-center">
-              <Button className="flex flex-row w-32 gap-2 bg-gray-600 p-2 rounded-md text-gray-200">
+              <Button className="flex flex-row w-32 gap-2 p-2 rounded-md text-gray-200">
                 <GitHubIcon />
                 <span className="font-medium mx-auto">Github</span>
               </Button>
-              <Button className="flex flex-row w-32 gap-2 bg-gray-600 p-2 rounded-md text-gray-200">
+              <Button className="flex flex-row w-32 gap-2 p-2 rounded-md text-gray-200">
                 <TwitterIcon />
                 <span className="font-medium mx-auto">Twitter</span>
               </Button>
-              <Button className="flex flex-row w-32 gap-2 bg-gray-600 p-2 rounded-md text-gray-200">
+              <Button className="flex flex-row w-32 gap-2 p-2 rounded-md text-gray-200">
                 <GitHubIcon />
                 <span className="font-medium mx-auto">Github</span>
               </Button>
@@ -179,8 +222,6 @@ const LoginForm: React.FC = () => {
       </TabsContent>
 
       <TabsContent value="password">
-        {loading && <p>Submitting...</p>}
-        {error && <p>Error: {error.message}</p>}
         <Card className="bg-secondary p-4 border-none shadow-none m-2">
           <div className="flex flex-row p-4 ">
             <h1 className="text-3xl mx-auto font-bold text-[#e0e0e0] my-auto">
@@ -191,30 +232,6 @@ const LoginForm: React.FC = () => {
           <form onSubmit={handleSubmit} className="flex flex-col">
             <div className="pb-2">
               <label
-                htmlFor="name"
-                className="block mb-2 text-sm font-medium text-[#e0e0e0]"
-              >
-                Nombre
-              </label>
-              <div className="relative text-gray-400">
-                <span className="absolute inset-y-0 left-0 flex items-center p-1 pl-3">
-                  <MailIcon />
-                </span>
-                <input
-                  placeholder="Nombre"
-                  type="text"
-                  name="name"
-                  value={form.name}
-                  onChange={handleChange}
-                  required
-                  autoComplete="off"
-                  className="pl-12 mb-2 bg-transparent text-[#e0e0e0] border  sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block w-full p-2.5 py-3 px-4"
-                />
-              </div>
-            </div>
-
-            <div className="pb-2">
-              <label
                 htmlFor="email"
                 className="block mb-2 text-sm font-medium text-[#e0e0e0]"
               >
@@ -222,7 +239,7 @@ const LoginForm: React.FC = () => {
               </label>
               <div className="relative text-gray-400">
                 <span className="absolute inset-y-0 left-0 flex items-center p-1 pl-3">
-                  <PassIcon />
+                  <MailIcon />
                 </span>
                 <input
                   placeholder="Correo electrónico"
@@ -236,49 +253,117 @@ const LoginForm: React.FC = () => {
               </div>
             </div>
 
-            <div className="pb-2">
-              <label
-                htmlFor="phone"
-                className="block mb-2 text-sm font-medium text-[#e0e0e0]"
-              >
-                Teléfono
-              </label>
-              <div className="relative text-gray-400">
-                <span className="absolute inset-y-0 left-0 flex items-center p-1 pl-3">
-                  <PassIcon />
-                </span>
-                <input
-                  placeholder="Teléfono"
-                  className="pl-12 mb-2 bg-transparent text-[#e0e0e0] border  sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block w-full p-2.5 py-3 px-4"
-                  type="text"
-                  name="phone"
-                  value={form.phone}
-                  onChange={handleChange}
-                  required
-                />
+            <div className="flex gap-2">
+              <div className="pb-2">
+                <label
+                  htmlFor="name"
+                  className="block mb-2 text-sm font-medium text-[#e0e0e0]"
+                >
+                  Nombre
+                </label>
+                <div className="relative text-gray-400">
+                  <span className="absolute inset-y-0 left-0 flex items-center p-1 pl-3">
+                    <NameInputIcon />
+                  </span>
+                  <input
+                    placeholder="Nombre"
+                    type="text"
+                    name="name"
+                    value={form.name}
+                    onChange={handleChange}
+                    required
+                    autoComplete="off"
+                    className="pl-12 mb-2 bg-transparent text-[#e0e0e0] border  sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block w-full p-2.5 py-3 px-4"
+                  />
+                </div>
+              </div>
+
+              <div className="pb-2">
+                <label
+                  htmlFor="phone"
+                  className="block mb-2 text-sm font-medium text-[#e0e0e0]"
+                >
+                  Teléfono
+                </label>
+                <div className="relative text-gray-400">
+                  <span className="absolute inset-y-0 left-0 flex items-center p-1 pl-3">
+                    <PhoneIcon />
+                  </span>
+                  <input
+                    placeholder="Teléfono"
+                    className="pl-12 mb-2 bg-transparent text-[#e0e0e0] border  sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block w-full p-2.5 py-3 px-4"
+                    type="text"
+                    name="phone"
+                    value={form.phone}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
               </div>
             </div>
 
-            <div className="pb-2">
-              <label
-                htmlFor="phone"
-                className="block mb-2 text-sm font-medium text-[#e0e0e0]"
-              >
-                Contraseña
-              </label>
-              <div className="relative text-gray-400">
-                <span className="absolute inset-y-0 left-0 flex items-center p-1 pl-3">
-                  <PassIcon />
-                </span>
-                <input
-                  placeholder="••••••••••"
-                  className="pl-12 mb-2 bg-transparent text-[#e0e0e0] border  sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block w-full p-2.5 py-3 px-4"
-                  type="password"
-                  name="password"
-                  value={form.password}
-                  onChange={handleChange}
-                  required
-                />
+            <div className="flex gap-2">
+              <div className="pb-2">
+                <label
+                  htmlFor="password"
+                  className="block mb-2 text-sm font-medium text-[#e0e0e0]"
+                >
+                  Contraseña
+                </label>
+                <div className="relative text-gray-400">
+                  <span className="absolute inset-y-0 left-0 flex items-center p-1 pl-3">
+                    <PassIcon />
+                  </span>
+                  <input
+                    placeholder="••••••••••"
+                    className="pl-12 mb-2 bg-transparent text-[#e0e0e0] border  sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block w-full p-2.5 py-3 px-4"
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    value={form.password}
+                    onChange={handleChange}
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400"
+                  >
+                     {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                  </button>
+                </div>
+              </div>
+
+              <div className="pb-2">
+                <label
+                  htmlFor="confirmPassword"
+                  className="block mb-2 text-sm font-medium text-[#e0e0e0]"
+                >
+                  Confirmar Contraseña
+                </label>
+                <div className="relative text-gray-400">
+                  <span className="absolute inset-y-0 left-0 flex items-center p-1 pl-3">
+                    <PassIcon />
+                  </span>
+                  <input
+                    placeholder="••••••••••"
+                    className="pl-12 mb-2 bg-transparent text-[#e0e0e0] border sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block w-full p-2.5 py-3 px-4"
+                    type={showPassword ? "text" : "password"}
+                    name="confirmPassword"
+                    value={form.confirmPassword}
+                    onChange={handleChange}
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400"
+                  >
+                     {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                  </button>
+                </div>
+                {passwordError && (
+                  <p className="text-red-500 text-sm mt-1">{passwordError}</p>
+                )}
               </div>
             </div>
 
@@ -299,6 +384,13 @@ const LoginForm: React.FC = () => {
               type="submit"
               className="w-32 mx-auto focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-6"
             >
+              {loading && (
+                <div className="flex-col gap-4 w-full flex items-center justify-center">
+                  <div className="w-8 h-8 border-4 border-transparent text-blue-400 text-4xl animate-spin flex items-center justify-center border-t-blue-400 rounded-full">
+                    <div className="w-4 h-4 border-4 border-transparent text-red-400 text-2xl animate-spin flex items-center justify-center border-t-red-400 rounded-full"></div>
+                  </div>
+                </div>
+              )}{" "}
               Registrarme
             </Button>
           </form>

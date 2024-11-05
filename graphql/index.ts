@@ -228,12 +228,12 @@ export const resolvers = {
     },
     updateUser: async (
       _: unknown,
-      { id, name, email, phone, role }: UserArgs,
+      { id, name, email, phone, role, password }: UserArgs,
       { supabaseClient }: Context
     ) => {
       const { data, error } = await supabaseClient
         .from("users")
-        .update({ name, email, phone, role })
+        .update({ name, email, phone, role, password })
         .eq("id", id)
         .single();
       if (error) throw new Error(error.message);
