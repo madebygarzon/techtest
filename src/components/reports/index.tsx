@@ -7,6 +7,7 @@ import { ChartTransactions } from "@/components/charts/chart_transactions";
 import { GET_TRANSACTIONS } from "../../../graphql/index";
 import { exportTransactionsToExcel } from "@/lib/exportToExcel";
 import { Button } from "@/components/ui/button";
+import Loader from "@/components/ui/loader";
 
 
 interface Transaction {
@@ -46,7 +47,12 @@ const Reports = () => {
     .filter((transaction) => transaction.type === "egreso")
     .reduce((acc, transaction) => acc + transaction.amount, 0);
 
-    if (loading) return <p>Loading...</p>;
+    if (loading)
+      return (
+        <div className="h-screen flex items-center justify-center">
+        <Loader outerWidth="100" outerHeight="100" innerScale={0.7} />
+        </div>
+      );
     if (error) return <p>Error: {error.message}</p>;
   return (
     <div>

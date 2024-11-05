@@ -26,6 +26,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import Swal from "sweetalert2";
+import Loader from "@/components/ui/loader";
 
 interface User {
   id: string;
@@ -57,7 +58,7 @@ const UPDATE_USER = gql`
 `;
 
 const Users = () => {
-  const { data } = useQuery<{ users: User[] }>(GET_USERS);
+  const { data, loading } = useQuery<{ users: User[] }>(GET_USERS);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [role, setRole] = useState("");
   const [updateUser] = useMutation(UPDATE_USER);
@@ -91,6 +92,13 @@ const Users = () => {
       }
     }
   };
+
+  if (loading)
+    return (
+     <div className="h-screen flex items-center justify-center">
+      <Loader outerWidth="100" outerHeight="100" innerScale={0.7} />
+      </div>
+    );
 
   return (
     <div>

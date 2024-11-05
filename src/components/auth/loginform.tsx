@@ -16,6 +16,7 @@ import Swal from "sweetalert2";
 import { useMutation } from "@apollo/client";
 import { CREATE_USER } from "../../../graphql/index";
 import bcrypt from "bcryptjs";
+import Loader from "@/components/ui/loader";
 
 interface UserForm {
   name: string;
@@ -180,18 +181,21 @@ const LoginForm: React.FC = () => {
                   autoComplete="new-password"
                 />
                 <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400"
-                  >
-                    {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
-                  </button>
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400"
+                >
+                  {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                </button>
               </div>
             </div>
             <Button
               type="submit"
-              className="w-32 mx-auto text-[#FFFFFF]  focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-6"
+              className="w-32 mx-auto focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-6"
             >
+              {loading && (
+                <Loader outerWidth="25" outerHeight="25" innerScale={0.7}/>
+              )}{" "}
               Ingresar
             </Button>
             <div className="mx-auto text-sm font-light text-[#e0e0e0]">
@@ -328,7 +332,7 @@ const LoginForm: React.FC = () => {
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400"
                   >
-                     {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                    {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
                   </button>
                 </div>
               </div>
@@ -358,7 +362,7 @@ const LoginForm: React.FC = () => {
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400"
                   >
-                     {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                    {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
                   </button>
                 </div>
                 {passwordError && (
@@ -385,11 +389,7 @@ const LoginForm: React.FC = () => {
               className="w-32 mx-auto focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-6"
             >
               {loading && (
-                <div className="flex-col gap-4 w-full flex items-center justify-center">
-                  <div className="w-8 h-8 border-4 border-transparent text-blue-400 text-4xl animate-spin flex items-center justify-center border-t-blue-400 rounded-full">
-                    <div className="w-4 h-4 border-4 border-transparent text-red-400 text-2xl animate-spin flex items-center justify-center border-t-red-400 rounded-full"></div>
-                  </div>
-                </div>
+                <Loader outerWidth="25" outerHeight="25" innerScale={0.7}/>
               )}{" "}
               Registrarme
             </Button>

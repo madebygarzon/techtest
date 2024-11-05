@@ -1,11 +1,14 @@
-"use client";
-import { useEffect, useState } from "react";
-
-import { LightIcon, DarkIcon } from "@/components/ui/icons";
-import {Switch} from "@nextui-org/switch";
+import { useState, useEffect } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export function ThemeSwitcher() {
-  const [theme, setTheme] = useState("dark");
+  const [theme, setTheme] = useState<"light" | "dark" | "system">("dark");
 
   useEffect(() => {
     const htmlElement = document.querySelector("html");
@@ -13,30 +16,32 @@ export function ThemeSwitcher() {
       if (theme === "dark") {
         htmlElement.classList.add("dark");
         htmlElement.classList.remove("light");
-      } else {
+      } else if (theme === "light") {
         htmlElement.classList.add("light");
         htmlElement.classList.remove("dark");
+      } else {
+        // Para el tema "system", verifica la preferencia del sistema
+        const isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        htmlElement.classList.toggle("dark", isDarkMode);
+        htmlElement.classList.toggle("light", !isDarkMode);
       }
     }
   }, [theme]);
-  const handleChangeTheme = () => {
-    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+
+  const handleThemeChange = (value: "light" | "dark" | "system") => {
+    setTheme(value);
   };
+
   return (
-    <Switch
-      className=""
-      onClick={handleChangeTheme}
-      defaultSelected
-      size="lg"
-      color="default"
-      thumbIcon={
-        theme === "light" ? (
-          <DarkIcon fill="#344256" className=" w-4 h-4" />
-        ) : (
-          <LightIcon fill="#344256" />
-        )
-      }
-    ></Switch>
+    <Select onValueChange={handleThemeChange}>
+      <SelectTrigger className="w-[150px]">
+        <SelectValue placeholder="Tema" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="light"> 🌞 Light</SelectItem>
+        <SelectItem value="dark"> 🌑 Dark</SelectItem>
+        <SelectItem value="system"> 💻 System</SelectItem>
+      </SelectContent>
+    </Select>
   );
 }
-

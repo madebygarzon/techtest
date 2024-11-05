@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { CREATE_TRANSACTION, GET_USERS } from "../../../graphql/index";
 import Swal from "sweetalert2";
-
+import { PlusIcon } from "@/components/ui/icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -63,7 +63,6 @@ const CreateTransactionForm: React.FC = () => {
           type: form.type,
           amount: parseFloat(form.amount.toString()),
           date: form.date,
-         
         },
       });
       Swal.fire({
@@ -98,9 +97,9 @@ const CreateTransactionForm: React.FC = () => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button >Open</Button>
+        <Button> <PlusIcon/> Nueva Transacción</Button>
       </SheetTrigger>
-      <SheetContent  className="p-0 border-0 rounded-none">
+      <SheetContent className="p-0 border-0 rounded-none">
         <div className="bg-background flex  justify-center items-center h-screen dark:bg-gray-900">
           <div className="relative">
             <div className="min-h-96  py-6 text-left rounded-xl shadow-lg">
@@ -155,9 +154,6 @@ const CreateTransactionForm: React.FC = () => {
                   />
                 </div>
 
-
-
-
                 <div className="w-full flex flex-col gap-2">
                   <Label className="font-semibold text-xs text-gray-400">
                     Fecha:
@@ -172,15 +168,7 @@ const CreateTransactionForm: React.FC = () => {
                   />
                 </div>
 
-
-
-
-
-                <Button
-                  className="block mx-auto"
-                  type="submit"
-                  
-                >
+                <Button className="block mx-auto" type="submit">
                   Crear
                 </Button>
 
