@@ -196,20 +196,6 @@ export const resolvers = {
       }
       return data;
     },
-
-    // transaction: async (
-    //   _: unknown,
-    //   { id }: TransactionArgs,
-    //   { supabaseClient }: Context
-    // ) => {
-    //   const { data, error } = await supabaseClient
-    //     .from("transactions")
-    //     .select("id, type, date, amount, user:user_id (id, name)")
-    //     .eq("id", id)
-    //     .single();
-    //   if (error) throw new Error(error.message);
-    //   return data;
-    // },
   },
 
   Mutation: {
