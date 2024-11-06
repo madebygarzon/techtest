@@ -7,7 +7,7 @@ import bcrypt from "bcryptjs";
 import { createClient } from "@supabase/supabase-js";
 
 const prisma = new PrismaClient();
-const supabase = createClient(process.env.SUPABASE_URL || 'null', process.env.SUPABASE_KEY || 'null');
+const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL || 'null', process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'null');
 
 export default NextAuth({
   providers: [
