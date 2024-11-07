@@ -59,7 +59,24 @@ const config: Config = {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
-  		}
+  		}, 
+		  maxHeight: {
+			'10': '10%',
+			'25': '25%',
+			'50': '50%',
+			'75': '75%',
+			'90': '90%',
+			'100': '100%',
+		  },
+		  minHeight: {
+			'25': '25%',
+			'75': '75%',
+			'50': '50%',
+			'90': '90%',
+			'80': '80%',
+			'85': '85%',
+			'95': '95%',
+		  },
   	}
   },
   plugins: [require("tailwindcss-animate")],

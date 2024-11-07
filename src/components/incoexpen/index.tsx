@@ -6,7 +6,6 @@ import Header from "@/components/header";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableFooter,
   TableHead,
@@ -98,64 +97,87 @@ const Transactions = () => {
     <div>
       <BreadIncoExpen />
       <Header />
-      <h2 className="text-2xl font-bold mb-4">Transacciones</h2>
-      <div className="border border-gray-200 rounded-lg shadow-md py-8 px-4 max-w-full">
-        <div className="mb-6 flex items-center justify-end gap-4">
+
+      <div className="border border-[#303030] rounded-xl  py-8 px-4 max-w-full">
+        <div className="flex justify-between">
           <div>
-            <Select
-              value={selectedType}
-              onValueChange={(value) => setSelectedType(value)}
-            >
-              <SelectTrigger className="w-[180px] pl-12 bg-transparent text-[#e0e0e0] border border-gray-400 sm:text-sm rounded-lg ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 p-2.5 py-3">
-                <FilterIcon />
-                <SelectValue placeholder="Filtrar por Tipo" />
-              </SelectTrigger>
-              <SelectContent>
-                {uniqueTypes.map((type) => (
-                  <SelectItem key={type} value={type}>
-                    {type}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <h2 className="relative ml-1 text-2xl text-[#e0e0e0] font-bold mb-4">
+              Transacciones
+            </h2>
           </div>
 
-          <div className="relative text-gray-400">
-            <span className="absolute inset-y-0 left-0 flex items-center p-1 pl-3">
-              <UserIcon />
-            </span>
-            <input
-              type="text"
-              value={userSearch}
-              onChange={(e) => setUserSearch(e.target.value)}
-              placeholder="Filtrar por Usuario"
-              className="w-64 h-9 pl-12  bg-transparent text-[#e0e0e0] border border-slate-400  sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block  p-2.5 py-3 px-4"
-            />
+          <div className="mb-6 flex items-center justify-end gap-4">
+            <div>
+              <Select
+                value={selectedType}
+                onValueChange={(value) => setSelectedType(value)}
+              >
+                <SelectTrigger className="w-[180px] pl-12 bg-transparent text-[#e0e0e0] border border-gray-400 sm:text-sm rounded-lg ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 p-2.5 py-3">
+                  <FilterIcon />
+                  <SelectValue placeholder="Filtrar por Tipo" />
+                </SelectTrigger>
+                <SelectContent>
+                  {uniqueTypes.map((type) => (
+                    <SelectItem key={type} value={type}>
+                      {type}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="relative text-gray-400">
+              <span className="absolute inset-y-0 left-0 flex items-center p-1 pl-3">
+                <UserIcon />
+              </span>
+              <input
+                type="text"
+                value={userSearch}
+                onChange={(e) => setUserSearch(e.target.value)}
+                placeholder="Filtrar por Usuario"
+                className="w-64 h-9 pl-12  bg-transparent text-[#e0e0e0] border border-slate-400  sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block  p-2.5 py-3 px-4"
+              />
+            </div>
+            <div>{isAdmin && <CreateTransactionForm />}</div>
           </div>
-          <div>{isAdmin && <CreateTransactionForm />}</div>
         </div>
 
-        <div className="max-h-[50vh] overflow-y-auto">
+        <div className="max-h-[50vh] mt-8 overflow-y-auto">
+         
           <Table className="w-full">
-            <TableCaption>Lista de transacciones</TableCaption>
+           
+
             <TableHeader>
-              <TableRow>
-                <TableHead>Concepto</TableHead>
-                <TableHead>Monto</TableHead>
-                <TableHead>Fecha</TableHead>
-                <TableHead>Usuario</TableHead>
+              <TableRow className="hover:bg-[#3030302c] border-b border-gray-500">
+                <TableHead className="text-[#e0e0e0] text-lg">
+                  Concepto
+                </TableHead>
+                <TableHead className="text-[#e0e0e0] text-lg">Monto</TableHead>
+                <TableHead className="text-[#e0e0e0] text-lg">Fecha</TableHead>
+                <TableHead className="text-[#e0e0e0] text-lg">
+                  Usuario
+                </TableHead>
               </TableRow>
             </TableHeader>
             {filteredTransactions && filteredTransactions.length > 0 ? (
               <TableBody>
                 {filteredTransactions.map((transaction: Transaction) => (
-                  <TableRow key={transaction.id}>
-                    <TableCell>{transaction.type}</TableCell>
-                    <TableCell>
+                  <TableRow
+                    className="text-gray-400 hover:bg-[#3030302c] hover:text-[#e0e0e0] border-b border-b-[#303030]"
+                    key={transaction.id}
+                  >
+                    <TableCell className="border border-[#303030]">
+                      {transaction.type}
+                    </TableCell>
+                    <TableCell className="border border-[#303030]">
                       $ {transaction.amount.toLocaleString("es-CO")}
                     </TableCell>
-                    <TableCell>{transaction.date}</TableCell>
-                    <TableCell>{transaction.userId.name}</TableCell>
+                    <TableCell className="border border-[#303030]">
+                      {transaction.date}
+                    </TableCell>
+                    <TableCell className="border border-[#303030]">
+                      {transaction.userId.name}
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -163,22 +185,28 @@ const Transactions = () => {
               <p>No se encontraron transacciones.</p>
             )}
 
-            <TableFooter>
-              <TableRow>
-                <TableCell className="font-bold">Total Ingresos</TableCell>
-                <TableCell>
+            <TableFooter className="hover:bg-[#3030302c] bg-transparent pt-4">
+              <TableRow className="hover:bg-[#3030302c]">
+                <TableCell className="border-l border-l-[#303030] border-b border-b-[#303030] font-bold text-gray-400">Total Ingresos</TableCell>
+                <TableCell className="border-b border-b-[#303030]"></TableCell>
+                <TableCell className="border-b border-b-[#303030]"></TableCell>
+                <TableCell  className="border-b border-b-[#303030] text-[#e0e0e0] border-r border-r-[#303030]">
                   $ {totalIngresos?.toLocaleString("es-CO")}
                 </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-bold">Total Egresos</TableCell>
-                <TableCell>
+              </TableRow >
+              <TableRow className="hover:bg-[#3030302c]">
+                <TableCell className="border-l border-l-[#303030] border-b border-b-[#303030] font-bold text-gray-400">Total Egresos</TableCell>
+                <TableCell className="border-b border-b-[#303030]"></TableCell>
+                <TableCell className="border-b border-b-[#303030]"></TableCell>
+                <TableCell className="border-b border-b-[#303030] border-r border-r-[#303030] text-[#e0e0e0]">
                   $ {totalEngresos?.toLocaleString("es-CO")}
                 </TableCell>
               </TableRow>
-              <TableRow>
-                <TableCell className="font-bold">Total Movimientos</TableCell>
-                <TableCell>$ {totalAmount?.toLocaleString("es-CO")}</TableCell>
+              <TableRow className="hover:bg-[#3030302c]">
+                <TableCell className="border-b border-l border-l-[#303030] border-b-[#303030] font-bold text-gray-400">Total Movimientos</TableCell>
+                <TableCell className="border-b border-b-[#303030]"></TableCell>
+                <TableCell className="border-b border-b-[#303030]"></TableCell>
+                <TableCell className="border-b border-r border-r-[#303030] border-b-[#303030] text-[#e0e0e0]">$ {totalAmount?.toLocaleString("es-CO")}</TableCell>
               </TableRow>
             </TableFooter>
           </Table>
