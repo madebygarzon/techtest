@@ -89,7 +89,13 @@ export const CREATE_USER = gql`
     $role: String!
     $password: String!
   ) {
-    createUser(name: $name, email: $email, phone: $phone, role: $role, password: $password) {
+    createUser(
+      name: $name
+      email: $email
+      phone: $phone
+      role: $role
+      password: $password
+    ) {
       id
       name
       email
@@ -185,12 +191,15 @@ export const resolvers = {
       if (error) throw new Error(error.message);
       return data;
     },
-
-    transactions: async (_: unknown, __: unknown, { supabaseClient }: Context) => {
+    transactions: async (
+      _: unknown,
+      __: unknown,
+      { supabaseClient }: Context
+    ) => {
       const { data, error } = await supabaseClient
         .from("transactions")
         .select("id, type, date, amount, userId(id, name)");
-    
+
       if (error) {
         throw new Error(`Error al obtener transacciones: ${error.message}`);
       }
@@ -242,28 +251,26 @@ export const resolvers = {
       { userId, type, amount, date }: TransactionArgs,
       { supabaseClient }: Context
     ) => {
-      // Crear la transacción
-      const { data: transactionData, error: transactionError } = await supabaseClient
-        .from("transactions")
-        .insert([{ userId, type, amount, date }])
-        .select()
-        .single();
-    
-      if (transactionError) throw new Error(`Error al crear la transacción: ${transactionError.message}`);
-    
-      // Obtener el usuario asociado
+      const { data: transactionData, error: transactionError } =
+        await supabaseClient
+          .from("transactions")
+          .insert([{ userId, type, amount, date }])
+          .select()
+          .single();
+      if (transactionError)
+        throw new Error(
+          `Error al crear la transacción: ${transactionError.message}`
+        );
       const { data: userData, error: userError } = await supabaseClient
         .from("users")
         .select("id, name, email")
         .eq("id", userId)
         .single();
-    
-      if (userError) throw new Error(`Error al obtener usuario: ${userError.message}`);
-    
-      // Combina la transacción con el usuario
+      if (userError)
+        throw new Error(`Error al obtener usuario: ${userError.message}`);
       return {
         ...transactionData,
-        userId: userData, // Devuelve el objeto User completo en lugar de solo el ID
+        userId: userData,
       };
     },
     updateTransaction: async (
@@ -279,17 +286,17 @@ export const resolvers = {
       if (error) throw new Error(error.message);
       return data;
     },
-    deleteTransaction: async (
-      _: unknown,
-      { id }: TransactionArgs,
-      { supabaseClient }: Context
-    ) => {
-      const { error } = await supabaseClient
-        .from("transactions")
-        .delete()
-        .eq("id", id);
-      if (error) throw new Error(error.message);
-      return true;
-    },
+    // deleteTransaction: async (
+    //   _: unknown,
+    //   { id }: TransactionArgs,
+    //   { supabaseClient }: Context
+    // ) => {
+    //   const { error } = await supabaseClient
+    //     .from("transactions")
+    //     .delete()
+    //     .eq("id", id);
+    //   if (error) throw new Error(error.message);
+    //   return true;
+    // },
   },
 };

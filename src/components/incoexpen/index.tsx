@@ -23,6 +23,22 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Loader from "@/components/ui/loader";
+import { useSession } from "next-auth/react";
+
+declare module "next-auth" {
+  interface Session {
+    user: {
+      id: string;
+      name?: string | null;
+      email?: string | null;
+      image?: string | null;
+      role: string;
+    };
+  }
+  interface User {
+    role: string;
+  }
+}
 
 interface Transaction {
   id: string;
@@ -39,13 +55,16 @@ const Transactions = () => {
     GET_TRANSACTIONS
   );
 
+  const { data: session } = useSession();
+  const isAdmin = session?.user?.role === "Admin";
+
   const [selectedType, setSelectedType] = useState("");
   const [userSearch, setUserSearch] = useState("");
 
   if (loading)
     return (
       <div className="h-screen flex items-center justify-center">
-      <Loader outerWidth="100" outerHeight="100" innerScale={0.7} />
+        <Loader outerWidth="100" outerHeight="100" innerScale={0.7} />
       </div>
     );
 
@@ -113,9 +132,7 @@ const Transactions = () => {
               className="w-64 h-9 pl-12  bg-transparent text-[#e0e0e0] border border-slate-400  sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block  p-2.5 py-3 px-4"
             />
           </div>
-          <div>
-            <CreateTransactionForm />
-          </div>
+          <div>{isAdmin && <CreateTransactionForm />}</div>
         </div>
 
         <div className="max-h-[50vh] overflow-y-auto">
