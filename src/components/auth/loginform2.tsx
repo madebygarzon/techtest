@@ -19,9 +19,10 @@ const LoginForm: React.FC = () => {
 
     
     const result = await signIn("credentials", {
-      redirect: false, 
+      redirect: true, // Forzar redirección
       email,
       password,
+      callbackUrl: "/",
     });
 
     setLoading(false);

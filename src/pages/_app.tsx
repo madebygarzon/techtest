@@ -10,9 +10,9 @@ const client = new ApolloClient({
 
 export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
-    <SessionProvider session={session}>
-      <ApolloProvider client={client}>
-        <Component {...pageProps} />
+    <SessionProvider session={session}>  {/* Proveedor de sesión NextAuth */}
+      <ApolloProvider client={client}>    {/* Proveedor de Apollo para GraphQL */}
+        <Component {...pageProps} />      {/* Componente de página */}
       </ApolloProvider>
     </SessionProvider>
   );
