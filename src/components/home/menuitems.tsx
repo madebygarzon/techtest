@@ -21,7 +21,7 @@ declare module "next-auth" {
 const MenuItems = () => {
   const { data: session } = useSession();
 
-  const isAdmin = session?.user?.role === "Usurio";
+  const isAdmin = session?.user?.role === "Admin";
 
   return (
     <div className="bg-secondary flex h-full items-center gap-4 justify-center">

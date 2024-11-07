@@ -76,7 +76,7 @@ export default NextAuth({
   
   adapter: PrismaAdapter(prisma),
   session: {
-    strategy: "database",
+    strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60,   // 30 días
     updateAge: 24 * 60 * 60,     // 24 horas
   },
@@ -110,4 +110,5 @@ export default NextAuth({
       return token;
     },
   },
+  debug: true,
 });

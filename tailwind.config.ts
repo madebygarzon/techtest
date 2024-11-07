@@ -29,7 +29,7 @@ const config: Config = {
   				foreground: '#ffffff'
   			},
 			tertiary: {
-				DEFAULT: '#123175',
+				DEFAULT: '#2563EB',
 				foreground: '#ffffff'
 			},
   			muted: {

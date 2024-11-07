@@ -1,5 +1,5 @@
 import React from "react";
-import LoginForm from "./loginform";
+import RightForm from "./rightsection";
 import LeftSection from "./leftsection";
 
 const Sectionlogin = () => {
@@ -9,7 +9,7 @@ const Sectionlogin = () => {
         <LeftSection />
       </div>
       <div className="w-1/2">
-        <LoginForm />
+        <RightForm />
       </div>
     </div>
   );
