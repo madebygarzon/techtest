@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useMutation, useQuery } from "@apollo/client";
-import { CREATE_TRANSACTION, GET_USERS, GET_TRANSACTIONS } from "../../../graphql/index";
+import {
+  CREATE_TRANSACTION,
+  GET_USERS,
+  GET_TRANSACTIONS,
+} from "../../../graphql/index";
 import Swal from "sweetalert2";
 import { PlusIcon } from "@/components/ui/icons";
 import { Button } from "@/components/ui/button";
@@ -33,7 +37,6 @@ interface Transaction {
     name: string;
   };
 }
-
 
 const CreateTransactionForm: React.FC = () => {
   const { refetch } = useQuery<{ transactions: Transaction[] }>(

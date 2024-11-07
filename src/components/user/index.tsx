@@ -18,10 +18,7 @@ import {
   Sheet,
   SheetClose,
   SheetContent,
-  SheetDescription,
   SheetFooter,
-  SheetHeader,
-  SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import Swal from "sweetalert2";
@@ -63,12 +60,21 @@ const Users = () => {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [role, setRole] = useState("");
   const [name, setName] = useState("");
+  const [loadings, setloadings] = useState(false);
   const [updateUser] = useMutation(UPDATE_USER);
-  const handleCombinedClick = () => {
-    handleSave();
-    setTimeout(() => {
-      handleClick();
-    }, 2000);
+  const handleCombinedClick = async () => {
+    setloadings(true);
+    try {
+      await handleSave();
+      handleSave();
+      setTimeout(() => {
+        handleClick();
+      }, 2000);
+    } catch (error) {
+      console.error("Error en el proceso:", error);
+    } finally {
+      setloadings(false); // Desactiva el estado de carga al finalizar
+    }
   };
 
   const [isClicked, setIsClicked] = useState(false);
@@ -182,6 +188,7 @@ const Users = () => {
                       <Sheet>
                         <SheetTrigger asChild>
                           <Button
+                            className="border-none bg-primary hover:bg-primary hover:text-white text-gray-400"
                             variant="outline"
                             onClick={() => handleEditClick(user)}
                           >
@@ -189,93 +196,79 @@ const Users = () => {
                             Editar usuario
                           </Button>
                         </SheetTrigger>
-                        <SheetContent>
-                          <SheetHeader>
-                            <SheetTitle>Editar usuario</SheetTitle>
-                            <SheetDescription>
-                              Modifica los datos del usuario
-                            </SheetDescription>
-                          </SheetHeader>
-                          <div className="grid gap-4 py-4">
-                            <div className="grid grid-cols-4 items-center gap-4">
-                              <label htmlFor="name" className="text-right">
-                                Nombre
-                              </label>
-                              <Input
-                                id="name"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                className="col-span-3"
-                              />
+                        <SheetContent className="w-[500px] bg-secondary p-0 border-l border-l-gray-400 rounded-none">
+                          <div className=" flex  justify-center items-center h-screen dark:bg-gray-900">
+                            <div className="relative">
+                              <div className="min-h-96  py-6 text-left rounded-xl shadow-lg">
+                                <h1 className="text-[#e0e0e0] text-2xl font-bold my-6 flex justify-center">
+                                  Editar usuario
+                                </h1>
+
+                                <div className="mb-2">
+                                  <Label
+                                    htmlFor="name"
+                                    className="w-80 bg-transparent block mb-2 text-sm font-medium text-[#e0e0e0]"
+                                  >
+                                    Nombre
+                                  </Label>
+                                  <Input
+                                    id="name"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    className="col-span-3"
+                                  />
+                                </div>
+
+                                <div className="mb-2">
+                                  <Label
+                                    htmlFor="role"
+                                    className="w-80 bg-transparent block mb-2 text-sm font-medium text-[#e0e0e0]"
+                                  >
+                                    Rol
+                                  </Label>
+                                  <select
+                                    id="role"
+                                    value={role}
+                                    onChange={(e) => setRole(e.target.value)}
+                                    className="bg-transparent text-gray-400 border rounded-lg px-3 py-2 mb-5 text-sm w-full outline-none dark:border-gray-500 dark:bg-gray-900"
+                                  >
+                                    <option
+                                      style={{ backgroundColor: "#000000" }}
+                                      value="User"
+                                    >
+                                      User
+                                    </option>
+                                    <option
+                                      style={{ backgroundColor: "#000000" }}
+                                      value="Admin"
+                                    >
+                                      Admin
+                                    </option>
+                                  </select>
+                                </div>
+
+                                <div className="flex justify-center">
+                                  <Button
+                                    onClick={handleCombinedClick}
+                                    className="w-40 mx-auto focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-6"
+                                    type="submit"
+                                    disabled={loadings} // Opcional: desactiva el botón mientras carga
+                                  >
+                                    {loadings && (
+                                      <Loader
+                                        outerWidth="25"
+                                        outerHeight="25"
+                                        innerScale={0.7}
+                                      />
+                                    )}{" "}
+                                    Guardar cambios
+                                  </Button>
+                                </div>
+                              </div>
                             </div>
-
-                            <div className="grid grid-cols-4 items-center gap-4">
-                              <label htmlFor="role" className="text-right">
-                                Rol
-                              </label>
-                              <select
-                                id="role"
-                                value={role}
-                                onChange={(e) => setRole(e.target.value)}
-                                className="col-span-3"
-                              >
-                                <option value="User">User</option>
-                                <option value="Admin">Admin</option>
-                              </select>
-                            </div>
-
-                            {/* <div className="mb-2">
-                              <Label className="block mb-2 text-sm font-medium text-[#e0e0e0]">
-                                Concepto
-                              </Label>
-                              <select
-                                className="bg-transparent text-gray-400 border rounded-lg px-3 py-2 mb-5 text-sm w-full outline-none dark:border-gray-500 dark:bg-gray-900"
-                                
-                                id="role"
-                                value={role}
-                                onChange={(e) => setRole(e.target.value)}
-                                
-                              >
-                                <option
-                                  style={{ backgroundColor: "#000000" }}
-                                  value="Ingreso"
-                                >
-                                  Admin
-                                </option>
-                                <option
-                                  style={{ backgroundColor: "#000000" }}
-                                  value="Egreso"
-                                >
-                                  User
-                                </option>
-                              </select>
-
-
-
-                          </div> */}
-
-                            {/* <div className="grid grid-cols-4 items-center gap-4">
-                              <label htmlFor="role" className="text-right">
-                                Rol
-                              </label>
-                              <Input
-                                id="role"
-                                value={role}
-                                onChange={(e) => setRole(e.target.value)}
-                                className="col-span-3"
-                              />
-                            </div>  */}
                           </div>
                           <SheetFooter>
-                            <SheetClose asChild>
-                              <Button
-                                onClick={handleCombinedClick}
-                                className="block mx-auto"
-                                type="submit"
-                              >
-                                Guardar cambios
-                              </Button>
-                            </SheetClose>
+                            <SheetClose asChild></SheetClose>
                           </SheetFooter>
                         </SheetContent>
                       </Sheet>
