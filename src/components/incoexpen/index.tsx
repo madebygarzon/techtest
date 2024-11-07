@@ -13,7 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import CreateTransactionForm from "@/components/incoexpen/createtrans";
-import { FilterIcon, UserIcon } from "@/components/ui/icons";
+import { FilterIcon, UserIcon, RefreshIcon } from "@/components/ui/icons";
 import {
   Select,
   SelectContent,
@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/select";
 import Loader from "@/components/ui/loader";
 import { useSession } from "next-auth/react";
+import { Button } from "@/components/ui/button";
 
 declare module "next-auth" {
   interface Session {
@@ -50,9 +51,16 @@ interface Transaction {
 }
 
 const Transactions = () => {
-  const { data, loading, error } = useQuery<{ transactions: Transaction[] }>(
-    GET_TRANSACTIONS
-  );
+  const [isClicked, setIsClicked] = useState(false);
+  const handleClick = async () => {
+    setIsClicked(true);
+    await refetch();
+    setIsClicked(false);
+  };
+
+  const { data, loading, error, refetch } = useQuery<{
+    transactions: Transaction[];
+  }>(GET_TRANSACTIONS);
 
   const { data: session } = useSession();
   const isAdmin = session?.user?.role === "Admin";
@@ -78,7 +86,9 @@ const Transactions = () => {
           .includes(userSearch.toLowerCase()))
   );
 
-  const uniqueTypes = [...new Set(data?.transactions.map((t) => t.type))];
+  const uniqueTypes = [
+    ...new Set(data?.transactions.map((t) => t.type)),
+  ].filter(Boolean);
 
   const totalAmount = filteredTransactions?.reduce(
     (acc, transaction) => acc + transaction.amount,
@@ -97,7 +107,6 @@ const Transactions = () => {
     <div>
       <BreadIncoExpen />
       <Header />
-
       <div className="border border-[#303030] rounded-xl  py-8 px-4 max-w-full">
         <div className="flex justify-between">
           <div>
@@ -139,14 +148,21 @@ const Transactions = () => {
               />
             </div>
             <div>{isAdmin && <CreateTransactionForm />}</div>
+
+            <Button
+              onClick={handleClick}
+              className="px-4 py-2 text-white rounded-lg"
+            >
+              <RefreshIcon /> Actualizar{" "}
+              {isClicked && (
+                <Loader outerWidth="25" outerHeight="25" innerScale={0.7} />
+              )}
+            </Button>
           </div>
         </div>
 
         <div className="max-h-[50vh] mt-8 overflow-y-auto">
-         
           <Table className="w-full">
-           
-
             <TableHeader>
               <TableRow className="hover:bg-[#3030302c] border-b border-gray-500">
                 <TableHead className="text-[#e0e0e0] text-lg">
@@ -187,15 +203,19 @@ const Transactions = () => {
 
             <TableFooter className="hover:bg-[#3030302c] bg-transparent pt-4">
               <TableRow className="hover:bg-[#3030302c]">
-                <TableCell className="border-l border-l-[#303030] border-b border-b-[#303030] font-bold text-gray-400">Total Ingresos</TableCell>
+                <TableCell className="border-l border-l-[#303030] border-b border-b-[#303030] font-bold text-gray-400">
+                  Total Ingresos
+                </TableCell>
                 <TableCell className="border-b border-b-[#303030]"></TableCell>
                 <TableCell className="border-b border-b-[#303030]"></TableCell>
-                <TableCell  className="border-b border-b-[#303030] text-[#e0e0e0] border-r border-r-[#303030]">
+                <TableCell className="border-b border-b-[#303030] text-[#e0e0e0] border-r border-r-[#303030]">
                   $ {totalIngresos?.toLocaleString("es-CO")}
                 </TableCell>
-              </TableRow >
+              </TableRow>
               <TableRow className="hover:bg-[#3030302c]">
-                <TableCell className="border-l border-l-[#303030] border-b border-b-[#303030] font-bold text-gray-400">Total Egresos</TableCell>
+                <TableCell className="border-l border-l-[#303030] border-b border-b-[#303030] font-bold text-gray-400">
+                  Total Egresos
+                </TableCell>
                 <TableCell className="border-b border-b-[#303030]"></TableCell>
                 <TableCell className="border-b border-b-[#303030]"></TableCell>
                 <TableCell className="border-b border-b-[#303030] border-r border-r-[#303030] text-[#e0e0e0]">
@@ -203,10 +223,14 @@ const Transactions = () => {
                 </TableCell>
               </TableRow>
               <TableRow className="hover:bg-[#3030302c]">
-                <TableCell className="border-b border-l border-l-[#303030] border-b-[#303030] font-bold text-gray-400">Total Movimientos</TableCell>
+                <TableCell className="border-b border-l border-l-[#303030] border-b-[#303030] font-bold text-gray-400">
+                  Total Movimientos
+                </TableCell>
                 <TableCell className="border-b border-b-[#303030]"></TableCell>
                 <TableCell className="border-b border-b-[#303030]"></TableCell>
-                <TableCell className="border-b border-r border-r-[#303030] border-b-[#303030] text-[#e0e0e0]">$ {totalAmount?.toLocaleString("es-CO")}</TableCell>
+                <TableCell className="border-b border-r border-r-[#303030] border-b-[#303030] text-[#e0e0e0]">
+                  $ {totalAmount?.toLocaleString("es-CO")}
+                </TableCell>
               </TableRow>
             </TableFooter>
           </Table>

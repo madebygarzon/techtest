@@ -31,7 +31,7 @@ const RegisterForm: React.FC = () => {
     name: "",
     email: "",
     phone: "",
-    role: "Usuario",
+    role: "User",
     password: "",
     confirmPassword: "",
   });
@@ -42,7 +42,7 @@ const RegisterForm: React.FC = () => {
     name: "",
     email: "",
     phone: "",
-    role: "Usuario",
+    role: "User",
     password: "",
     confirmPassword: "",
   };

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useMutation, useQuery } from "@apollo/client";
-import { CREATE_TRANSACTION, GET_USERS } from "../../../graphql/index";
+import { CREATE_TRANSACTION, GET_USERS, GET_TRANSACTIONS } from "../../../graphql/index";
 import Swal from "sweetalert2";
 import { PlusIcon } from "@/components/ui/icons";
 import { Button } from "@/components/ui/button";
@@ -13,6 +13,7 @@ import {
   SheetFooter,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import Loader from "@/components/ui/loader";
 
 interface User {
   id: string;
@@ -23,19 +24,34 @@ interface GetUsersData {
   users: User[];
 }
 
+interface Transaction {
+  id: string;
+  type: string;
+  date: string;
+  amount: number;
+  userId: {
+    name: string;
+  };
+}
+
+
 const CreateTransactionForm: React.FC = () => {
+  const { refetch } = useQuery<{ transactions: Transaction[] }>(
+    GET_TRANSACTIONS
+  );
+
   const {
     data,
     loading: usersLoading,
     error: usersError,
   } = useQuery<GetUsersData>(GET_USERS);
-  const [createTransaction, { loading, error }] =
-    useMutation(CREATE_TRANSACTION);
+
+  const [createTransaction, { loading }] = useMutation(CREATE_TRANSACTION);
 
   const [form, setForm] = useState({
     userId: "",
-    type: "ingreso",
-    amount: 0,
+    type: "Ingreso",
+    amount: "",
     date: "",
   });
 
@@ -59,27 +75,28 @@ const CreateTransactionForm: React.FC = () => {
     try {
       await createTransaction({
         variables: {
-          userId: form.userId, // Pasar solo el ID aquí
+          userId: form.userId,
           type: form.type,
           amount: parseFloat(form.amount.toString()),
           date: form.date,
         },
       });
+
       Swal.fire({
         icon: "success",
         title: "¡Transacción creada exitosamente!",
-        text: `Se ha creado una transacción de ${form.amount} `,
+        text: `Se creó un ${form.type} por valor de $${form.amount}`,
         showConfirmButton: false,
-        timer: 1500,
+        timer: 4000,
       });
-      if (data && data.users && data.users.length > 0) {
-        setForm({
-          userId: data.users[0].id,
-          type: "ingreso",
-          amount: 0,
-          date: "",
-        });
-      }
+
+      setForm({
+        userId:
+          data && data.users && data.users.length > 0 ? data.users[0].id : "", // Puedes dejar vacío o preseleccionar
+        type: "Ingreso",
+        amount: "",
+        date: "",
+      });
     } catch (err) {
       console.error("Error creating transaction:", err);
       Swal.fire({
@@ -87,62 +104,89 @@ const CreateTransactionForm: React.FC = () => {
         title: "Error",
         text:
           err instanceof Error ? err.message : "Ocurrió un error desconocido",
+        timer: 4000,
       });
     }
   };
 
-  if (usersLoading) return <p>Loading users...</p>;
-  if (usersError) return <p>Error loading users: {usersError.message}</p>;
+  if (usersLoading) return <p>Cargando usuarios...</p>;
+  if (usersError) return <p>Error cargando usuarios: {usersError.message}</p>;
 
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button> <PlusIcon/> Nueva Transacción</Button>
+        <Button>
+          {" "}
+          <PlusIcon /> Nueva Transacción
+        </Button>
       </SheetTrigger>
-      <SheetContent className="p-0 border-0 rounded-none">
-        <div className="bg-background flex  justify-center items-center h-screen dark:bg-gray-900">
+      <SheetContent className="w-[500px] bg-secondary p-0 border-l border-l-gray-400 rounded-none">
+        <div className=" flex  justify-center items-center h-screen dark:bg-gray-900">
           <div className="relative">
             <div className="min-h-96  py-6 text-left rounded-xl shadow-lg">
-              <h1 className="text-slate-600 text-2xl font-bold my-6 flex justify-center">
+              <h1 className="text-[#e0e0e0] text-2xl font-bold my-6 flex justify-center">
                 Crear Transacción
               </h1>
               <form onSubmit={handleSubmit}>
-                <div className="w-full flex flex-col gap-2">
-                  <Label className="font-semibold text-xs text-gray-400">
-                    Usuario:
+                <div className="mb-2">
+                  <Label className="w-80 bg-transparent block mb-2 text-sm font-medium text-[#e0e0e0]">
+                    Usuario
                   </Label>
                   <select
-                    className="text-slate-600 border rounded-lg px-3 py-2 mb-5 text-sm w-full outline-none dark:border-gray-500 dark:bg-gray-900"
+                    className="bg-transparent text-gray-400 border rounded-lg px-3 py-2 mb-5 text-sm w-full outline-none dark:border-gray-500 dark:bg-gray-900"
                     name="userId"
                     value={form.userId}
                     onChange={handleChange}
+                    required
                   >
+                    <option
+                      style={{ backgroundColor: "#000000", color: "#e0e0e0" }}
+                      value=""
+                      disabled
+                    >
+                      Seleccione un usuario
+                    </option>
                     {data?.users.map((user: User) => (
-                      <option key={user.id} value={user.id}>
+                      <option
+                        style={{ backgroundColor: "#000000" }}
+                        key={user.id}
+                        value={user.id}
+                      >
                         {user.name}
                       </option>
                     ))}
                   </select>
                 </div>
 
-                <div className="w-full flex flex-col gap-2">
-                  <Label className="font-semibold text-xs text-gray-400">
-                    Concepto:
+                <div className="mb-2">
+                  <Label className="block mb-2 text-sm font-medium text-[#e0e0e0]">
+                    Concepto
                   </Label>
                   <select
-                    className="text-slate-600 border rounded-lg px-3 py-2 mb-5 text-sm w-full outline-none dark:border-gray-500 dark:bg-gray-900"
+                    className="bg-transparent text-gray-400 border rounded-lg px-3 py-2 mb-5 text-sm w-full outline-none dark:border-gray-500 dark:bg-gray-900"
                     name="type"
                     value={form.type}
                     onChange={handleChange}
+                    required
                   >
-                    <option value="ingreso">Ingreso</option>
-                    <option value="egreso">Egreso</option>
+                    <option
+                      style={{ backgroundColor: "#000000" }}
+                      value="Ingreso"
+                    >
+                      Ingreso
+                    </option>
+                    <option
+                      style={{ backgroundColor: "#000000" }}
+                      value="Egreso"
+                    >
+                      Egreso
+                    </option>
                   </select>
                 </div>
 
-                <div className="w-full flex flex-col gap-2">
-                  <Label className="font-semibold text-xs text-gray-400">
-                    Monto:
+                <div className="mb-2">
+                  <Label className="block mb-2 text-sm font-medium text-[#e0e0e0]">
+                    Monto
                   </Label>
                   <Input
                     type="number"
@@ -150,13 +194,13 @@ const CreateTransactionForm: React.FC = () => {
                     value={form.amount}
                     onChange={handleChange}
                     required
-                    className="text-slate-600 border rounded-lg px-3 py-2 mb-5 text-sm w-full outline-none dark:border-gray-500 dark:bg-gray-900"
+                    className="text-gray-400 border rounded-lg px-3 py-2 mb-5 text-sm w-full outline-none dark:border-gray-500 dark:bg-gray-900"
                   />
                 </div>
 
-                <div className="w-full flex flex-col gap-2">
-                  <Label className="font-semibold text-xs text-gray-400">
-                    Fecha:
+                <div className="mb-2">
+                  <Label className="block mb-2 text-sm font-medium text-[#e0e0e0]">
+                    Fecha
                   </Label>
                   <Input
                     type="date"
@@ -164,25 +208,33 @@ const CreateTransactionForm: React.FC = () => {
                     value={form.date}
                     onChange={handleChange}
                     required
-                    className="text-slate-600 border rounded-lg px-3 py-2 mb-5 text-sm w-full outline-none dark:border-gray-500 dark:bg-gray-900"
+                    className="text-gray-400 border rounded-lg px-3 py-2 mb-5 text-sm w-full outline-none dark:border-gray-500 dark:bg-gray-900"
                   />
                 </div>
 
-                <Button className="block mx-auto" type="submit">
-                  Crear
-                </Button>
-
-                {loading && <p>Enviando...</p>}
-                {error && <p>Error: {error.message}</p>}
+                <div className="flex justify-center">
+                  <Button
+                    onClick={() => refetch()}
+                    className="w-32 mx-auto focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-6"
+                    type="submit"
+                  >
+                    {loading && (
+                      <Loader
+                        outerWidth="25"
+                        outerHeight="25"
+                        innerScale={0.7}
+                      />
+                    )}
+                    Crear
+                  </Button>
+                </div>
               </form>
             </div>
           </div>
         </div>
 
         <SheetFooter>
-          <SheetClose asChild>
-            <Button type="submit">Save changes</Button>
-          </SheetClose>
+          <SheetClose asChild></SheetClose>
         </SheetFooter>
       </SheetContent>
     </Sheet>
