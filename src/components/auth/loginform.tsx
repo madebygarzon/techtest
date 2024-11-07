@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { signIn } from "next-auth/react";
 import {
   MailIcon,
   PassIcon,
@@ -91,6 +92,13 @@ const LoginForm: React.FC = () => {
         showConfirmButton: false,
         timer: 4000,
       });
+      await signIn("credentials", {
+        redirect: true,
+        email: form.email,
+        password: form.password,
+      });
+      window.location.href = "/";
+
       setForm(initialFormState);
     } catch (err) {
       console.error("Error creating user:", err);

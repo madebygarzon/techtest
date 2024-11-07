@@ -6,8 +6,34 @@ import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { createClient } from "@supabase/supabase-js";
 
+declare module "next-auth" {
+  interface Session {
+    user: {
+      id: string;
+      name?: string | null;
+      email?: string | null;
+      image?: string | null;
+      role: string;
+    };
+  }
+  interface User {
+    id: string;
+    name: string;
+    email: string;
+    role: string;
+  }
+  interface JWT {
+    id: string;
+    role: string;
+  }
+}
+
 const prisma = new PrismaClient();
-const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL || 'null', process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'null');
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL || "",
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ""
+);
 
 export default NextAuth({
   providers: [
@@ -18,25 +44,27 @@ export default NextAuth({
         password: { label: "Password", type: "password" },
       },
       authorize: async (credentials) => {
-        // Buscar el usuario en la tabla `users` de Supabase
         const { data: user, error } = await supabase
           .from("users")
           .select("*")
           .eq("email", credentials?.email)
           .single();
-
+      
         if (error || !user) {
           throw new Error("Usuario no encontrado");
         }
-
-        // Comparar la contraseña con bcrypt
+      
         const isPasswordValid = await bcrypt.compare(credentials!.password, user.password);
         if (!isPasswordValid) {
           throw new Error("Contraseña incorrecta");
         }
 
-        // Retornar los datos del usuario para la sesión
-        return { id: user.id, name: user.name, email: user.email, role: user.role };
+        return {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+        };
       },
     }),
     Auth0Provider({
@@ -49,21 +77,20 @@ export default NextAuth({
   adapter: PrismaAdapter(prisma),
   session: {
     strategy: "database",
-    maxAge: 30 * 24 * 60 * 60,
-    updateAge: 24 * 60 * 60,
+    maxAge: 30 * 24 * 60 * 60,   // 30 días
+    updateAge: 24 * 60 * 60,     // 24 horas
   },
   callbacks: {
-    async session({ session, user }) {
-      session.userId = user.id;
-      session.user = { ...session.user, role: user.role };
-      return session;
-    },
-    async jwt({ token, user }) {
-      if (user) {
-        token.role = user.role;
-      }
-      return token;
+    async signIn({ user }) {
+      const sessionToken = `session-${Date.now()}-${user.id}`;
+      await prisma.session.create({
+        data: {
+          sessionToken,
+          userId: user.id,
+          expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+        },
+      });
+      return true;
     },
   },
-  debug: process.env.NODE_ENV === 'development',
 });

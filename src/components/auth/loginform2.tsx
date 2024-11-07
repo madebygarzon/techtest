@@ -26,6 +26,8 @@ const LoginForm: React.FC = () => {
 
     setLoading(false);
 
+    console.log(result); 
+
     if (result?.error) {
       Swal.fire({
         icon: "error",
