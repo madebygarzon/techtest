@@ -21,11 +21,12 @@ interface User {
 
 const FooterSideBar = () => {
   const [user, setUser] = useState<User | null>(null);
+  const apiUrl = process.env.NEXTAUTH_URL || "http://localhost:3000";
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/auth/session");
+        const response = await fetch(`${apiUrl}/api/auth/session`);
         const data = await response.json();
         setUser(data.user);
       } catch (error) {
@@ -33,7 +34,7 @@ const FooterSideBar = () => {
       }
     };
     fetchUser();
-  }, []);
+  }, [apiUrl]);
 
   return (
     <div className="absolute bottom-4">
