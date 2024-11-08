@@ -1,5 +1,5 @@
 import React from "react";
-import LeftSection from "@/components/auth/leftSection";
+import LeftSection from "@/components/auth/leftsection";
 import RightSection from "@/components/auth/rightsection";
 
 const Sectionlogin = () => {
