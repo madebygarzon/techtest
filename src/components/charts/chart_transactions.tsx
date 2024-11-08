@@ -5,10 +5,7 @@ import { Label, Pie, PieChart } from "recharts";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
-  CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import {
   ChartConfig,
@@ -17,7 +14,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-export const description = "A donut chart with transaction data";
+export const description = "Grafico de transacciones";
 
 interface ChartTransactionsProps {
   totalIngresos: number;
@@ -31,11 +28,11 @@ const chartConfig = {
   },
   ingresos: {
     label: "Ingresos",
-    color: "hsl(var(--chart-1))",
+    color: "#2662D9",
   },
   egresos: {
     label: "Egresos",
-    color: "hsl(var(--chart-2))",
+    color: "#E23670",
   },
 } satisfies ChartConfig;
 
@@ -50,11 +47,8 @@ export function ChartTransactions({
   ];
 
   return (
-    <Card className="flex flex-col">
-      <CardHeader className="items-center pb-0">
-        <CardTitle>Pie Chart - Donut with Transactions</CardTitle>
-        <CardDescription>Total Movimientos</CardDescription>
-      </CardHeader>
+    <Card className="flex border-none bg-transparent flex-col">
+      
       <CardContent className="flex-1 pb-0">
         <ChartContainer
           config={chartConfig}
@@ -81,20 +75,21 @@ export function ChartTransactions({
                         y={viewBox.cy}
                         textAnchor="middle"
                         dominantBaseline="middle"
-                      >
+                         className="text-white"
+                      > 
                         <tspan
                           x={viewBox.cx}
                           y={viewBox.cy}
-                          className="fill-foreground text-3xl font-bold"
-                        >
+                          className="fill-gray-200 text-3xl font-bold"
+                        > ${" "}
                           {totalMovimientos.toLocaleString()}
                         </tspan>
                         <tspan
                           x={viewBox.cx}
                           y={(viewBox.cy || 0) + 24}
-                          className="fill-muted-foreground"
+                          className="fill-white"
                         >
-                          Movimientos
+                          Consolidado
                         </tspan>
                       </text>
                     );
@@ -105,13 +100,13 @@ export function ChartTransactions({
           </PieChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col gap-2 text-sm">
-        <div className="flex items-center gap-2 font-medium leading-none">
-          Datos actualizados de ingresos y egresos{" "}
+      <CardFooter className=" flex-col gap-2 text-sm">
+        <div className="text-gray-400 flex items-center gap-2 font-medium leading-none">
+          Datos actualizados del total de ingresos y egresos{" "}
           <TrendingUp className="h-4 w-4" />
         </div>
         <div className="leading-none text-muted-foreground">
-          Mostrando total de movimientos
+        
         </div>
       </CardFooter>
     </Card>

@@ -1,6 +1,7 @@
 import React from "react";
 import { BalanceIcon } from "@/components/ui/icons";
 import { TabsTrigger, TabsList } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
 
 const ItemIncoexpe = () => {
   return (
@@ -22,13 +23,15 @@ const ItemIncoexpe = () => {
         <div className="flex px-6 pb-8 sm:px-8">
           <TabsList className="bg-inherit  mb-0 p-0 ">
             <TabsTrigger value="incomesexpenses" className="flex items-center">
-              <a
-                aria-describedby="tier-company"
-                className="flex items-center justify-center w-full px-6 py-2.5 text-center text-white duration-200  border-2 rounded-lg nline-flex focus:outline-none  text-sm focus-visible:ring-black"
-                href="#"
-              >
-                Ver
-              </a>
+              <Button>
+                <a
+                  aria-describedby="tier-company"
+                  className="flex items-center justify-center w-full px-6 py-2.5 text-center text-white duration-200   rounded-lg nline-flex focus:outline-none  text-sm focus-visible:ring-black"
+                  href="#"
+                >
+                  Ver
+                </a>
+              </Button>
             </TabsTrigger>
           </TabsList>
         </div>

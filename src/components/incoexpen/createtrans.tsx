@@ -120,7 +120,7 @@ const CreateTransactionForm: React.FC = () => {
       <SheetTrigger asChild>
         <Button>
           {" "}
-          <PlusIcon /> Nueva Transacción
+          <PlusIcon /> Nueva transacción
         </Button>
       </SheetTrigger>
       <SheetContent className="w-[500px] bg-secondary p-0 border-l border-l-gray-400 rounded-none">

@@ -24,6 +24,7 @@ import {
 import Swal from "sweetalert2";
 import Loader from "@/components/ui/loader";
 import { Label } from "@/components/ui/label";
+import { UserIcon } from "@/components/ui/icons";
 
 interface User {
   id: string;
@@ -62,6 +63,7 @@ const Users = () => {
   const [name, setName] = useState("");
   const [loadings, setloadings] = useState(false);
   const [updateUser] = useMutation(UPDATE_USER);
+  const [userSearch, setUserSearch] = useState("");
   const handleCombinedClick = async () => {
     setloadings(true);
     try {
@@ -123,6 +125,11 @@ const Users = () => {
         <Loader outerWidth="100" outerHeight="100" innerScale={0.7} />
       </div>
     );
+  const filteredUsers = data?.users.filter(
+    (user) =>
+      userSearch === "" ||
+      user.name.toLowerCase().includes(userSearch.toLowerCase())
+  );
 
   return (
     <div>
@@ -137,10 +144,18 @@ const Users = () => {
           </div>
 
           <div className="mb-6 flex items-center justify-end gap-4">
-            <div></div>
-
-            <div className="relative text-gray-400"></div>
-            <div></div>
+            <div className="relative text-gray-400">
+              <span className="absolute inset-y-0 left-0 flex items-center p-1 pl-3">
+                <UserIcon />
+              </span>
+              <input
+                type="text"
+                value={userSearch}
+                onChange={(e) => setUserSearch(e.target.value)}
+                placeholder="Filtrar por Usuario"
+                className="w-64 h-9 pl-12  bg-transparent text-[#e0e0e0] border border-slate-400  sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block  p-2.5 py-3 px-4"
+              />
+            </div>
 
             <Button
               onClick={handleClick}
@@ -168,9 +183,10 @@ const Users = () => {
                 </TableHead>
               </TableRow>
             </TableHeader>
-            {data && data.users ? (
+
+            {filteredUsers && filteredUsers.length ? (
               <TableBody>
-                {data.users.map((user: User) => (
+                {filteredUsers.map((user: User) => (
                   <TableRow
                     className="text-gray-400 hover:bg-[#3030302c] hover:text-[#e0e0e0] border-b border-b-[#303030]"
                     key={user.id}

@@ -96,11 +96,11 @@ const Transactions = () => {
   );
 
   const totalIngresos = filteredTransactions
-    ?.filter((transaction) => transaction.type === "ingreso")
+    ?.filter((transaction) => transaction.type === "Ingreso")
     .reduce((acc, transaction) => acc + transaction.amount, 0);
 
   const totalEngresos = filteredTransactions
-    ?.filter((transaction) => transaction.type === "egreso")
+    ?.filter((transaction) => transaction.type === "Egreso")
     .reduce((acc, transaction) => acc + transaction.amount, 0);
 
   return (
@@ -147,6 +147,7 @@ const Transactions = () => {
                 className="w-64 h-9 pl-12  bg-transparent text-[#e0e0e0] border border-slate-400  sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block  p-2.5 py-3 px-4"
               />
             </div>
+            
             <div>{isAdmin && <CreateTransactionForm />}</div>
 
             <Button

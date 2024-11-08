@@ -21,6 +21,7 @@ declare module "next-auth" {
     name: string;
     email: string;
     role: string;
+    phone?: string;
   }
   interface JWT {
     id: string;
@@ -64,6 +65,7 @@ export default NextAuth({
           name: user.name,
           email: user.email,
           role: user.role,
+          phone: user.phone,
         };
       },
     }),
