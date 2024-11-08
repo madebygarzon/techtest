@@ -370,3 +370,17 @@ export function RefreshIcon(props: ComponentProps<"svg">) {
       <path d="M204-318q-22-38-33-78t-11-82q0-134 93-228t227-94h7l-64-64 56-56 160 160-160 160-56-56 64-64h-7q-100 0-170 70.5T240-478q0 26 6 51t18 49l-60 60ZM481-40 321-200l160-160 56 56-64 64h7q100 0 170-70.5T720-482q0-26-6-51t-18-49l60-60q22 38 33 78t11 82q0 134-93 228t-227 94h-7l64 64-56 56Z"/></svg>
   );
 }
+
+export function DownloadIcon(props: ComponentProps<"svg">) {
+  return (
+    <svg 
+      xmlns="http://www.w3.org/2000/svg" 
+      height="24px" 
+      viewBox="0 -960 960 960" 
+      width="24px" 
+      fill="currentcolor"
+      {...props}
+    >
+      <path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></svg>
+  );
+}

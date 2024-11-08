@@ -3,7 +3,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import LoginForm from "@/components/auth/loginform";
 import RegisterForm from "@/components/auth/registerform";
 
-const RightForm: React.FC = () => {
+const RightSection: React.FC = () => {
   return (
     <Tabs
       defaultValue="account"
@@ -29,4 +29,4 @@ const RightForm: React.FC = () => {
   );
 };
 
-export default RightForm;
+export default RightSection;

@@ -1,9 +1,9 @@
 import React from 'react'
-import SideBar from '../sidebar'
+import MainSection from '../mainsection'
 
 const Home = () => {
   return (
-    <SideBar />
+    <MainSection />
   )
 }
 

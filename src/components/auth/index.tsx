@@ -1,6 +1,6 @@
 import React from "react";
-import RightForm from "./rightsection";
-import LeftSection from "./leftsection";
+import LeftSection from "@/components/auth/leftSection";
+import RightSection from "@/components/auth/rightsection";
 
 const Sectionlogin = () => {
   return (
@@ -9,10 +9,10 @@ const Sectionlogin = () => {
         <LeftSection />
       </div>
       <div className="w-1/2">
-        <RightForm />
+        <RightSection />
       </div>
     </div>
   );
 };
-
+                                    
 export default Sectionlogin;

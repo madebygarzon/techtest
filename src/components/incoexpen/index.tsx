@@ -104,7 +104,7 @@ const Transactions = () => {
     .reduce((acc, transaction) => acc + transaction.amount, 0);
 
   return (
-    <div>
+    <div className="">
       <BreadIncoExpen />
       <Header />
       <div className="border border-[#303030] rounded-xl  py-8 px-4 max-w-full">

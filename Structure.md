@@ -6,6 +6,10 @@
         └── 📁migrations
             └── 📁20241105184551_add_auth_tables
                 └── migration.sql
+            └── 📁20241106175757_update_sethings
+                └── migration.sql
+            └── 📁20241106191803_
+                └── migration.sql
             └── migration_lock.toml
         └── schema.prisma
     └── 📁public
@@ -18,12 +22,11 @@
                 └── index.tsx
                 └── leftsection.tsx
                 └── loginform.tsx
-                └── loginform2.tsx
-                └── signup.tsx
+                └── registerform.tsx
+                └── rightsection.tsx
             └── 📁breadcrumb
                 └── index.tsx
             └── 📁charts
-                └── bartchart.tsx
                 └── chart_transactions.tsx
             └── 📁footer
                 └── index.tsx
@@ -38,22 +41,24 @@
             └── 📁incoexpen
                 └── createtrans.tsx
                 └── index.tsx
-            └── 📁powered
-                └── index.tsx
-            └── 📁reports
-                └── index.tsx
-            └── 📁sidebar
+            └── 📁mainsection
                 └── footer.tsx
                 └── header.tsx
                 └── index.tsx
                 └── items.tsx
+            └── 📁powered
+                └── index.tsx
+            └── 📁reports
+                └── index.tsx
             └── 📁ui
                 └── avatar.tsx
                 └── button.tsx
+                └── buttonsignout.tsx
                 └── card.tsx
                 └── chart.tsx
                 └── checkbox.tsx
                 └── dialog.tsx
+                └── dropdown-menu.tsx
                 └── hover-card.tsx
                 └── icons.tsx
                 └── input.tsx
@@ -61,7 +66,6 @@
                 └── loader.tsx
                 └── react-hover-card.tsx
                 └── select.tsx
-                └── selectlanguage.tsx
                 └── separator.tsx
                 └── sheet.tsx
                 └── sidebar.tsx
@@ -69,7 +73,6 @@
                 └── table.tsx
                 └── tabs.tsx
                 └── toast.tsx
-                └── toggleswitch.tsx
                 └── tooltip.tsx
             └── 📁user
                 └── index.tsx
@@ -87,7 +90,6 @@
                 └── hello.ts
             └── 📁auth
                 └── login.tsx
-                └── signup.tsx
             └── 📁fonts
                 └── GeistMonoVF.woff
                 └── GeistVF.woff
@@ -96,10 +98,10 @@
             └── _app.tsx
             └── _document.tsx
             └── index.tsx
-            └── test.tsx
         └── 📁styles
             └── globals.css
     └── .env
+    └── .env.local
     └── .eslintrc.json
     └── .gitignore
     └── components.json

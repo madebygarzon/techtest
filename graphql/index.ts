@@ -131,6 +131,18 @@ export const CREATE_TRANSACTION = gql`
   }
 `;
 
+export const GET_USERS_LIST = gql`
+  query GetUsers {
+    users {
+      id
+      name
+      email
+      phone
+      role
+    }
+  }
+`;
+
 export const GET_USERS = gql`
   query GetUsers {
     users {
@@ -165,10 +177,11 @@ export const GET_USER = gql`
 `;
 
 export const UPDATE_USER = gql`
-  mutation UpdateUser($id: ID!, $role: String!) {
-    updateUser(id: $id, role: $role) {
+  mutation UpdateUser($id: ID!, $role: String!, $name: String!) {
+    updateUser(id: $id, role: $role, name: $name) {
       id
       role
+      name
     }
   }
 `;
@@ -234,18 +247,6 @@ export const resolvers = {
       if (error) throw new Error(error.message);
       return data;
     },
-    deleteUser: async (
-      _: unknown,
-      { id }: UserArgs,
-      { supabaseClient }: Context
-    ) => {
-      const { error } = await supabaseClient
-        .from("users")
-        .delete()
-        .eq("id", id);
-      if (error) throw new Error(error.message);
-      return true;
-    },
     createTransaction: async (
       _: unknown,
       { userId, type, amount, date }: TransactionArgs,
@@ -273,30 +274,5 @@ export const resolvers = {
         userId: userData,
       };
     },
-    updateTransaction: async (
-      _: unknown,
-      { id, type, amount, date }: TransactionArgs,
-      { supabaseClient }: Context
-    ) => {
-      const { data, error } = await supabaseClient
-        .from("transactions")
-        .update({ type, amount, date })
-        .eq("id", id)
-        .single();
-      if (error) throw new Error(error.message);
-      return data;
-    },
-    // deleteTransaction: async (
-    //   _: unknown,
-    //   { id }: TransactionArgs,
-    //   { supabaseClient }: Context
-    // ) => {
-    //   const { error } = await supabaseClient
-    //     .from("transactions")
-    //     .delete()
-    //     .eq("id", id);
-    //   if (error) throw new Error(error.message);
-    //   return true;
-    // },
   },
 };

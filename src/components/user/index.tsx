@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Header from "@/components/header";
 import { BreadIncoUser } from "@/components/breadcrumb";
-import { useQuery, useMutation, gql } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import {
   Table,
   TableBody,
@@ -11,6 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { GET_USERS_LIST, UPDATE_USER } from "../../../graphql/index";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { EditUserIcon, RefreshIcon } from "@/components/ui/icons";
@@ -34,30 +35,8 @@ interface User {
   role: string;
 }
 
-const GET_USERS = gql`
-  query GetUsers {
-    users {
-      id
-      name
-      email
-      phone
-      role
-    }
-  }
-`;
-
-const UPDATE_USER = gql`
-  mutation UpdateUser($id: ID!, $role: String!, $name: String!) {
-    updateUser(id: $id, role: $role, name: $name) {
-      id
-      role
-      name
-    }
-  }
-`;
-
 const Users = () => {
-  const { data, loading, refetch } = useQuery<{ users: User[] }>(GET_USERS);
+  const { data, loading, refetch } = useQuery<{ users: User[] }>(GET_USERS_LIST);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [role, setRole] = useState("");
   const [name, setName] = useState("");
@@ -75,7 +54,7 @@ const Users = () => {
     } catch (error) {
       console.error("Error en el proceso:", error);
     } finally {
-      setloadings(false); // Desactiva el estado de carga al finalizar
+      setloadings(false); 
     }
   };
 

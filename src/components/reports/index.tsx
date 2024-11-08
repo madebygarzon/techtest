@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "@/components/header";
 import { useQuery } from "@apollo/client";
 import { BreadIncoReport } from "@/components/breadcrumb";
@@ -7,6 +7,8 @@ import { GET_TRANSACTIONS } from "../../../graphql/index";
 import { exportTransactionsToExcel } from "@/lib/exportToExcel";
 import { Button } from "@/components/ui/button";
 import Loader from "@/components/ui/loader";
+import { DownloadIcon } from "@/components/ui/icons";
+import { RefreshIcon } from "@/components/ui/icons";
 
 interface Transaction {
   id: string;
@@ -19,9 +21,16 @@ interface Transaction {
 }
 
 const Reports = () => {
-  const { data, loading, error } = useQuery<{ transactions: Transaction[] }>(
-    GET_TRANSACTIONS
-  );
+  const { data, loading, error, refetch } = useQuery<{
+    transactions: Transaction[];
+  }>(GET_TRANSACTIONS);
+
+  const [isClicked, setIsClicked] = useState(false);
+  const handleClick = async () => {
+    setIsClicked(true);
+    await refetch();
+    setIsClicked(false);
+  };
 
   const handleExport = () => {
     if (data && data.transactions) {
@@ -54,7 +63,21 @@ const Reports = () => {
       <BreadIncoReport />
       <Header />
       <div className="border border-[#303030] rounded-xl p-10">
-        <h2 className="text-[#e0e0e0] text-2xl font-bold mb-4">Reportes</h2>
+        <div className="flex justify-between">
+          <h2 className="text-[#e0e0e0] text-2xl font-bold mb-4">Reportes</h2>
+          <div>
+            <Button
+              onClick={handleClick}
+              className="px-4 py-2 text-white rounded-lg"
+            >
+              <RefreshIcon /> Actualizar{" "}
+              {isClicked && (
+                <Loader outerWidth="25" outerHeight="25" innerScale={0.7} />
+              )}
+            </Button>
+          </div>
+        </div>
+
         <div className=" flex items-center justify-center gap-4 ">
           <ChartTransactions
             totalIngresos={totalIngresos ?? 0}
@@ -82,7 +105,8 @@ const Reports = () => {
                 onClick={handleExport}
                 className="mt-4 mb-4 px-4  text-white "
               >
-                Descargar transacciones en Excel
+                <DownloadIcon />
+                Descargar transacciones
               </Button>
             </div>
           </div>

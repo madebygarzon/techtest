@@ -12,16 +12,18 @@ declare module "next-auth" {
       id: string;
       name?: string | null;
       email?: string | null;
-      image?: string | null;
+      phone?: string | null;
       role: string;
+      password?: string;
     };
   }
   interface User {
     id: string;
     name: string;
     email: string;
-    role: string;
     phone?: string;
+    role: string;
+    password?: string;
   }
   interface JWT {
     id: string;
@@ -79,8 +81,8 @@ export default NextAuth({
   adapter: PrismaAdapter(prisma),
   session: {
     strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60,   // 30 días
-    updateAge: 24 * 60 * 60,     // 24 horas
+    maxAge: 30 * 24 * 60 * 60,   
+    updateAge: 24 * 60 * 60,     
   },
   callbacks: {
     async signIn({ user }) {
