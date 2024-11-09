@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
-import { GET_TRANSACTIONS } from "../../../graphql/index";
+import { GET_TRANSACTIONS } from "../../graphql/index";
 import { BreadIncoExpen } from "@/components/breadcrumb";
 import Header from "@/components/header";
 import {

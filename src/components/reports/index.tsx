@@ -3,7 +3,7 @@ import Header from "@/components/header";
 import { useQuery } from "@apollo/client";
 import { BreadIncoReport } from "@/components/breadcrumb";
 import { ChartTransactions } from "@/components/charts/chart_transactions";
-import { GET_TRANSACTIONS } from "../../../graphql/index";
+import { GET_TRANSACTIONS } from "../../graphql/index";
 import { exportTransactionsToExcel } from "@/lib/exportToExcel";
 import { Button } from "@/components/ui/button";
 import Loader from "@/components/ui/loader";

@@ -13,7 +13,7 @@ import { Card } from "@/components/ui/card";
 
 import Swal from "sweetalert2";
 import { useMutation } from "@apollo/client";
-import { CREATE_USER } from "../../../graphql/index";
+import { CREATE_USER } from "../../graphql/index";
 import bcrypt from "bcryptjs";
 import Loader from "@/components/ui/loader";
 import { TabsContent } from "@/components/ui/tabs";

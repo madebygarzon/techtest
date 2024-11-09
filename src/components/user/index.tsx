@@ -11,7 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { GET_USERS_LIST, UPDATE_USER } from "../../../graphql/index";
+import { GET_USERS_LIST, UPDATE_USER } from "../../graphql/index";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { EditUserIcon, RefreshIcon } from "@/components/ui/icons";

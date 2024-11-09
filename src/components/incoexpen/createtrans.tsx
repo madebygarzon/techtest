@@ -4,7 +4,7 @@ import {
   CREATE_TRANSACTION,
   GET_USERS,
   GET_TRANSACTIONS,
-} from "../../../graphql/index";
+} from "../../graphql/index";
 import Swal from "sweetalert2";
 import { PlusIcon } from "@/components/ui/icons";
 import { Button } from "@/components/ui/button";

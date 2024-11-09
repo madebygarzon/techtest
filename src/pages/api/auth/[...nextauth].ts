@@ -113,5 +113,5 @@ export default NextAuth({
       return token;
     },
   },
-  debug: true,
+  debug: false,
 });
