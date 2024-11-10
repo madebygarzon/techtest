@@ -10,6 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import Loader from "@/components/ui/loader";
 
 interface User {
   name: string;
@@ -20,17 +21,23 @@ interface User {
 }
 
 const FooterSideBar = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState<User | null>(null);
-  const apiUrl = process.env.NEXTAUTH_URL || "http://localhost:3000";
+  const apiUrl =
+    process.env.NEXT_PUBLIC_NEXTAUTH_URL || "http://localhost:3000";
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const response = await fetch(`${apiUrl}/api/auth/session`);
+        if (!response.ok) throw new Error("Error fetching user data");
+
         const data = await response.json();
         setUser(data.user);
       } catch (error) {
         console.error("Error fetching user data:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchUser();
@@ -50,7 +57,19 @@ const FooterSideBar = () => {
               >
                 <div className="flex gap-1 items-center">
                   <span className="h-3 w-3 rounded-full bg-green-400 opacity-75"></span>
-                  <div>{user ? user.email : "Cargando..."}</div>
+                  <div>
+                    {isLoading ? (
+                      <Loader
+                        outerWidth="20"
+                        outerHeight="20"
+                        innerScale={0.7}
+                      />
+                    ) : user ? (
+                      user.email
+                    ) : (
+                      "Usuario no encontrado"
+                    )}
+                  </div>
                 </div>
               </Button>
             </div>
@@ -61,9 +80,15 @@ const FooterSideBar = () => {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>{user ? user.name : "Cargando..."}</DropdownMenuItem>
-              <DropdownMenuItem>{user ? user.role : "Cargando..."}</DropdownMenuItem>
-              <DropdownMenuItem>{user ? user.email : "Cargando..."}</DropdownMenuItem>
+              <DropdownMenuItem>
+                {user ? user.name : "Cargando..."}
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                {user ? user.role : "Cargando..."}
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                {user ? user.email : "Cargando..."}
+              </DropdownMenuItem>
             </DropdownMenuGroup>
 
             <DropdownMenuSeparator />

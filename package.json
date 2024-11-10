@@ -10,7 +10,6 @@
     "test": "jest --watch",
     "test:ci": "jest",
     "prisma:generate": "npx prisma generate"
-    
   },
   "dependencies": {
     "@apollo/client": "^3.11.9",
