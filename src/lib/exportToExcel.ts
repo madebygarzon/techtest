@@ -13,7 +13,7 @@ interface Transaction {
 export const exportTransactionsToExcel = (transactions: Transaction[]) => {
   const worksheet = XLSX.utils.json_to_sheet(
     transactions.map((transaction) => ({
-      ID: transaction.id,
+      // ID: transaction.id,
       Concepto: transaction.type,
       Monto: transaction.amount,
       Fecha: transaction.date,

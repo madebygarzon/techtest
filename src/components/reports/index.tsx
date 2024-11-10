@@ -5,11 +5,11 @@ import { BreadIncoReport } from "@/components/breadcrumb";
 import { ChartTransactions } from "@/components/charts/chart_transactions";
 import { GET_TRANSACTIONS } from "../../graphql/index";
 import { exportTransactionsToExcel } from "@/lib/exportToExcel";
+import { exportTransactionsToCSV } from "@/lib/exportToCSV";
 import { Button } from "@/components/ui/button";
 import Loader from "@/components/ui/loader";
 import { DownloadIcon } from "@/components/ui/icons";
 import { RefreshIcon } from "@/components/ui/icons";
-import { saveAs } from "file-saver";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -46,14 +46,6 @@ const Reports = () => {
     setIsClicked(false);
   };
 
-  const exportTransactionsToCSV = (transactions: Transaction[]) => {
-    const csvContent = transactions
-      .map((transaction) => Object.values(transaction).join(","))
-      .join("\n");
-
-    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-    saveAs(blob, "Transacciones.csv");
-  };
 
   const handleExport = () => {
     if (data && data.transactions) {
