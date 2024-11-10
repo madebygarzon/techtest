@@ -11,11 +11,11 @@ const ItemIncoexpe = () => {
           <div className="grid items-center justify-center w-full grid-cols-1 text-left">
             <div>
               <BalanceIcon width={40} height={40} />
-              <h2 className="mt-2 text-lg font-medium tracking-tighter text-white lg:text-3xl">
-                Balance
+              <h2 className=" text-lg font-medium tracking-tighter text-white lg:text-3xl">
+                Movimientos
               </h2>
               <p className="mt-2 text-sm text-white">
-                Sección de ingresos y gastos.
+                Sección de ingresos y egresos.
               </p>
             </div>
           </div>

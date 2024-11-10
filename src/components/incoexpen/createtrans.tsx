@@ -113,14 +113,14 @@ const CreateTransactionForm: React.FC = () => {
   };
 
   if (usersLoading) return <p>Cargando usuarios...</p>;
-  if (usersError) return <p>Error cargando usuarios: {usersError.message}</p>;
+  if (usersError) return <p>Error cargando usuarios, recargar la página: {usersError.message}</p>;
 
   return (
     <Sheet>
       <SheetTrigger asChild>
         <Button>
           {" "}
-          <PlusIcon /> Nueva transacción
+          <PlusIcon /> Nuevo movimiento
         </Button>
       </SheetTrigger>
       <SheetContent className="w-[500px] bg-secondary p-0 border-l border-l-gray-400 rounded-none">
@@ -218,7 +218,7 @@ const CreateTransactionForm: React.FC = () => {
                 <div className="flex justify-center">
                   <Button
                     onClick={() => refetch()}
-                    className="w-32 mx-auto focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-6"
+                    className="w-auto mx-auto focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-6"
                     type="submit"
                   >
                     {loading && (
@@ -228,7 +228,7 @@ const CreateTransactionForm: React.FC = () => {
                         innerScale={0.7}
                       />
                     )}
-                    Crear
+                    Guardar movimiento
                   </Button>
                 </div>
               </form>

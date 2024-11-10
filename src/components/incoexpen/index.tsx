@@ -109,10 +109,11 @@ const Transactions = () => {
       <Header />
       <div className="border border-[#303030] rounded-xl  py-8 px-4 max-w-full">
         <div className="flex justify-between">
-          <div>
-            <h2 className="relative ml-1 text-2xl text-[#e0e0e0] font-bold mb-4">
+          <div className="gap-0">
+            <h2 className="relative ml-1 text-2xl text-[#e0e0e0] font-bold">
               Transacciones
             </h2>
+            <p className="ml-1 text-sm text-gray-400">Total de movimientos: $ {totalAmount?.toLocaleString("es-CO")}</p>
           </div>
 
           <div className="mb-6 flex items-center justify-end gap-4">
