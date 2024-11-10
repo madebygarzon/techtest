@@ -10,7 +10,6 @@ import {
 } from "../ui/icons";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-
 import Swal from "sweetalert2";
 import { useMutation } from "@apollo/client";
 import { CREATE_USER } from "../../graphql/index";
@@ -37,6 +36,7 @@ const RegisterForm: React.FC = () => {
   });
 
   const [passwordError, setPasswordError] = useState("");
+  const [passwordStrength, setPasswordStrength] = useState<number>(0);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const initialFormState = {
     name: "",
@@ -58,6 +58,10 @@ const RegisterForm: React.FC = () => {
       [name]: value,
     }));
 
+    if (name === "password") {
+      validatePasswordStrength(value);
+    }
+
     if (name === "confirmPassword" || name === "password") {
       setPasswordError(
         form.password !== value && name === "confirmPassword"
@@ -67,10 +71,25 @@ const RegisterForm: React.FC = () => {
     }
   };
 
+  const validatePasswordStrength = (password: string) => {
+    let strength = 0;
+    if (password.length >= 8) strength++;
+    if (/[A-Z]/.test(password)) strength++;
+    if (/[0-9]/.test(password)) strength++;
+    if (/[a-z]/.test(password)) strength++;
+    setPasswordStrength(strength);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (form.password !== form.confirmPassword) {
       setPasswordError("Las contraseñas no coinciden");
+      return;
+    }
+    if (passwordStrength < 4) {
+      setPasswordError(
+        "La contraseña no cumple con los requisitos mínimos de seguridad"
+      );
       return;
     }
     try {
@@ -214,7 +233,7 @@ const RegisterForm: React.FC = () => {
                 </span>
                 <input
                   placeholder="••••••••••"
-                  className="pl-12 mb-2 bg-transparent text-[#e0e0e0] border  sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block w-full p-2.5 py-3 px-4"
+                  className="pl-12 mb-2 bg-transparent text-[#e0e0e0] border sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block w-full p-2.5 py-3 px-4"
                   type={showPassword ? "text" : "password"}
                   name="password"
                   value={form.password}
@@ -259,9 +278,26 @@ const RegisterForm: React.FC = () => {
                   {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
                 </button>
               </div>
-              {passwordError && (
-                <p className="text-red-500 text-sm mt-1">{passwordError}</p>
-              )}
+            </div>
+          </div>
+          <div className="flex w-full gap-2">
+            <div className="mt-2 w-1/2 h-2 rounded bg-gray-300">
+              <div
+                className={`h-full rounded ${
+                  passwordStrength === 4
+                    ? "bg-green-500"
+                    : passwordStrength >= 2
+                    ? "bg-yellow-500"
+                    : "bg-red-500"
+                }`}
+                style={{ width: `${(passwordStrength / 4) * 100}%` }}
+              ></div>
+            </div>
+            <div>
+              <p className="text-gray-400 text-[10px] ">
+                Tu contraseña debe contener al menos 8 caracteres, incluyendo
+                una letra mayúscula, una letra minúscula y un número.
+              </p>
             </div>
           </div>
 
@@ -280,13 +316,18 @@ const RegisterForm: React.FC = () => {
 
           <Button
             type="submit"
-            className="w-32 mx-auto focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-6"
+            className="w-32 mx-auto focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2"
           >
             {loading && (
               <Loader outerWidth="25" outerHeight="25" innerScale={0.7} />
             )}{" "}
             Registrarme
           </Button>
+          {passwordError && (
+            <p className="mx-auto text-red-500 text-sm mt-1">
+              *{passwordError}*
+            </p>
+          )}
         </form>
       </Card>
     </TabsContent>
