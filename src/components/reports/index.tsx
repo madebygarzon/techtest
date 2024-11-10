@@ -9,6 +9,20 @@ import { Button } from "@/components/ui/button";
 import Loader from "@/components/ui/loader";
 import { DownloadIcon } from "@/components/ui/icons";
 import { RefreshIcon } from "@/components/ui/icons";
+import { saveAs } from "file-saver";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import Image from "next/image";
+import IconXLSX from "../../../public/assets/icons8-xls-48.png";
+import IconCSV from "../../../public/assets/icons8-csv-48.png";
 
 interface Transaction {
   id: string;
@@ -32,9 +46,24 @@ const Reports = () => {
     setIsClicked(false);
   };
 
+  const exportTransactionsToCSV = (transactions: Transaction[]) => {
+    const csvContent = transactions
+      .map((transaction) => Object.values(transaction).join(","))
+      .join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    saveAs(blob, "Transacciones.csv");
+  };
+
   const handleExport = () => {
     if (data && data.transactions) {
       exportTransactionsToExcel(data.transactions);
+    }
+  };
+
+  const handleExportCSV = () => {
+    if (data && data.transactions) {
+      exportTransactionsToCSV(data.transactions);
     }
   };
 
@@ -101,13 +130,49 @@ const Reports = () => {
               </div>
             </div>
             <div>
-              <Button
-                onClick={handleExport}
-                className="mt-4 mb-4 px-4  text-white "
-              >
-                <DownloadIcon />
-                Descargar transacciones
-              </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button className="mt-4 mb-4 px-4  text-white">
+                    <DownloadIcon /> Descargar transacciones
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="bg-secondary  hover:text-black">
+                  <DropdownMenuLabel>
+                    <p className="text-white">Formato de descarga</p>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuGroup className="bg-secundary">
+                    <DropdownMenuItem
+                      className="cursor-pointer text-gray-400"
+                      onClick={handleExport}
+                    >
+                      <button className="mt-4 mb-4">Formato .xlsx</button>
+                      <DropdownMenuShortcut>
+                        <Image
+                          src={IconXLSX}
+                          width={40}
+                          height={40}
+                          alt="IconCSV"
+                        />
+                      </DropdownMenuShortcut>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      className="cursor-pointer text-gray-400"
+                      onClick={handleExportCSV}
+                    >
+                      <button className="mt-4 mb-4 ">Formato .csv</button>
+                      <DropdownMenuShortcut>
+                        <Image
+                          src={IconCSV}
+                          width={40}
+                          height={40}
+                          alt="IconCSV"
+                        />
+                      </DropdownMenuShortcut>
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
         </div>
