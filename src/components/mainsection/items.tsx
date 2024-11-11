@@ -49,7 +49,7 @@ const ItemsSideBar = () => {
             className="rounded-xl flex items-center my-2 gap-2 justify-start w-60 px-4 py-2 h-12"
           >
             <ReportIcon />
-             Ingresos y egresos
+             Reportes
           </TabsTrigger>
         )}
       </div>
