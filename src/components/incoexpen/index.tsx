@@ -99,7 +99,7 @@ const Transactions = () => {
     ?.filter((transaction) => transaction.type === "Ingreso")
     .reduce((acc, transaction) => acc + transaction.amount, 0);
 
-  const totalEngresos = filteredTransactions
+  const totalEgresos = filteredTransactions
     ?.filter((transaction) => transaction.type === "Egreso")
     .reduce((acc, transaction) => acc + transaction.amount, 0);
 
@@ -234,7 +234,7 @@ const Transactions = () => {
                 <TableCell className="border-b dark:border-b-[#303030]"></TableCell>
                 <TableCell className="border-b dark:border-b-[#303030]"></TableCell>
                 <TableCell className="border-b dark:border-b-[#303030] border-r dark:border-r-[#303030] text-slate-600 dark:text-[#e0e0e0] ">
-                  $ {totalEngresos?.toLocaleString("es-CO")}
+                  $ {totalEgresos?.toLocaleString("es-CO")}
                 </TableCell>
               </TableRow>
               <TableRow className="hover:bg-[#cecece2c] dark:hover:bg-[#3030302c]">

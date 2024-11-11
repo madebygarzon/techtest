@@ -18,7 +18,7 @@ export const description = "Grafico de transacciones";
 
 interface ChartTransactionsProps {
   totalIngresos: number;
-  totalEngresos: number;
+  totalEgresos: number;
   totalMovimientos: number;
 }
 
@@ -38,12 +38,12 @@ const chartConfig = {
 
 export function ChartTransactions({
   totalIngresos,
-  totalEngresos,
+  totalEgresos,
   totalMovimientos,
 }: ChartTransactionsProps) {
   const chartData = [
     { type: "Ingresos", amount: totalIngresos, fill: "var(--color-ingresos)" },
-    { type: "Egresos", amount: totalEngresos, fill: "var(--color-egresos)" },
+    { type: "Egresos", amount: totalEgresos, fill: "var(--color-egresos)" },
   ];
 
   return (

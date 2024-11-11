@@ -66,11 +66,13 @@ const Reports = () => {
 
   const totalIngresos = data?.transactions
     .filter((transaction) => transaction.type === "Ingreso")
-    .reduce((acc, transaction) => acc + transaction.amount, 0);
+    .reduce((acc, transaction) => acc + transaction.amount, 0) ?? 0;
 
-  const totalEngresos = data?.transactions
+  const totalEgresos = data?.transactions
     .filter((transaction) => transaction.type === "Egreso")
-    .reduce((acc, transaction) => acc + transaction.amount, 0);
+    .reduce((acc, transaction) => acc + transaction.amount, 0) ?? 0;
+
+    const saldo = totalIngresos - totalEgresos;
 
   if (loading)
     return (
@@ -102,7 +104,7 @@ const Reports = () => {
         <div className=" flex items-center justify-center gap-4 ">
           <ChartTransactions
             totalIngresos={totalIngresos ?? 0}
-            totalEngresos={totalEngresos ?? 0}
+            totalEgresos={totalEgresos ?? 0}
             totalMovimientos={totalAmount ?? 0}
           />
           <div>
@@ -117,9 +119,16 @@ const Reports = () => {
               <div className="mb-2 flex gap-1 items-center ">
                 <span className=" h-3 w-3 rounded-full bg-[#E23670] opacity-75"></span>
                 <div className="text-slate-600 dark:text-[#e0e0e0] ">
-                  Egresos: ${(totalEngresos ?? 0).toLocaleString()}
+                  Egresos: ${(totalEgresos ?? 0).toLocaleString()}
                 </div>
               </div>
+              <div className="mb-2 flex gap-1 items-center ">
+                <span className=" h-3 w-3 rounded-full bg-[#3DAC66] opacity-75"></span>
+                <div className="text-slate-600 dark:text-[#e0e0e0] ">
+                saldo: ${saldo.toLocaleString()}
+                </div>
+              </div>
+              
             </div>
             <div>
               <DropdownMenu>
