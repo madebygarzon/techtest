@@ -1,6 +1,8 @@
-// jest.setup.ts
-import { server } from './src/test/mocks/server';
+import "@testing-library/jest-dom";
 
-beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
+global.fetch = jest.fn(() =>
+    Promise.resolve({
+      json: () => Promise.resolve({}),
+    })
+  ) as jest.Mock;
+  

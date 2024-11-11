@@ -25,7 +25,7 @@ interface UserForm {
   password: string;
   confirmPassword: string;
 }
-const RegisterForm: React.FC = () => {
+export const RegisterForm: React.FC = () => {
   const [form, setForm] = useState<UserForm>({
     name: "",
     email: "",
