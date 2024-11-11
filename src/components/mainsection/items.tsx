@@ -23,7 +23,7 @@ const ItemsSideBar = () => {
   const isAdmin = session?.user?.role === "Admin";
 
   return (
-    <div className="text-white flex flex-col items-center justify-center h-full">
+    <div className="flex flex-col items-center justify-center h-full">
       <div className="flex flex-col items-center justify-center">
         <TabsTrigger
           value="incomesexpenses"
@@ -49,7 +49,7 @@ const ItemsSideBar = () => {
             className="rounded-xl flex items-center my-2 gap-2 justify-start w-60 px-4 py-2 h-12"
           >
             <ReportIcon />
-            Reportes
+             Ingresos y egresos
           </TabsTrigger>
         )}
       </div>

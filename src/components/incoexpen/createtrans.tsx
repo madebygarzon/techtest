@@ -123,64 +123,63 @@ const CreateTransactionForm: React.FC = () => {
           <PlusIcon /> Nuevo movimiento
         </Button>
       </SheetTrigger>
-      <SheetContent className="w-[500px] bg-secondary p-0 border-l border-l-gray-400 rounded-none">
-        <div className=" flex  justify-center items-center h-screen dark:bg-gray-900">
+      <SheetContent className="w-[500px] bg-slate-100 p-0 border-l dark:border-l-gray-400 border-l-gray-800 rounded-none">
+        <div className=" flex justify-center items-center h-screen dark:bg-secondary">
           <div className="relative">
-            <div className="min-h-96  py-6 text-left rounded-xl shadow-lg">
-              <h1 className="text-[#e0e0e0] text-2xl font-bold my-6 flex justify-center">
+            <div className="min-h-96 py-6 text-left  ">
+              <h1 className="text-slate-600 dark:text-[#e0e0e0] text-2xl font-bold my-6 flex justify-center">
                 Crear Transacción
               </h1>
               <form onSubmit={handleSubmit}>
                 <div className="mb-2">
-                  <Label className="w-80 bg-transparent block mb-2 text-sm font-medium text-[#e0e0e0]">
+                  <Label className="w-80 bg-transparent block mb-2 text-sm font-medium text-slate-600 dark:text-[#e0e0e0] ">
                     Usuario
                   </Label>
                   <select
-                    className="bg-transparent text-gray-400 border rounded-lg px-3 py-2 mb-5 text-sm w-full outline-none dark:border-gray-500 dark:bg-gray-900"
+                    className="dark:bg-secondary bg-slate-100 text-slate-600 dark:text-[#e0e0e0] border rounded-lg px-3 py-2 mb-5 text-sm w-full outline-none dark:border-gray-500 "
                     name="userId"
                     value={form.userId}
                     onChange={handleChange}
                     required
                   >
-                    <option
-                      style={{ backgroundColor: "#000000", color: "#e0e0e0" }}
+                    <option                      
                       value=""
                       disabled
+                      className="dark:bg-secondary"
                     >
                       Seleccione un usuario
                     </option>
                     {data?.users.map((user: User) => (
-                      <option
-                        style={{ backgroundColor: "#000000" }}
+                      <option                       
                         key={user.id}
                         value={user.id}
+                        className="dark:bg-secondary"
                       >
                         {user.name}
                       </option>
                     ))}
                   </select>
                 </div>
-
                 <div className="mb-2">
-                  <Label className="block mb-2 text-sm font-medium text-[#e0e0e0]">
+                  <Label className="block mb-2 text-sm font-medium text-slate-600 dark:text-[#e0e0e0] ">
                     Concepto
                   </Label>
                   <select
-                    className="bg-transparent text-gray-400 border rounded-lg px-3 py-2 mb-5 text-sm w-full outline-none dark:border-gray-500 dark:bg-gray-900"
+                    className="dark:bg-secondary bg-slate-100 text-slate-600 dark:text-[#e0e0e0] border rounded-lg px-3 py-2 mb-5 text-sm w-full outline-none dark:border-gray-500"
                     name="type"
                     value={form.type}
                     onChange={handleChange}
                     required
                   >
-                    <option
-                      style={{ backgroundColor: "#000000" }}
+                    <option  
                       value="Ingreso"
+                      className="dark:bg-secondary bg-slate-100"
                     >
                       Ingreso
                     </option>
-                    <option
-                      style={{ backgroundColor: "#000000" }}
+                    <option                     
                       value="Egreso"
+                      className="dark:bg-secondary bg-slate-100"
                     >
                       Egreso
                     </option>
@@ -188,7 +187,7 @@ const CreateTransactionForm: React.FC = () => {
                 </div>
 
                 <div className="mb-2">
-                  <Label className="block mb-2 text-sm font-medium text-[#e0e0e0]">
+                  <Label className="dark:bg-transparent block mb-2 text-sm font-medium text-slate-600 dark:text-[#e0e0e0] ">
                     Monto
                   </Label>
                   <Input
@@ -197,12 +196,12 @@ const CreateTransactionForm: React.FC = () => {
                     value={form.amount}
                     onChange={handleChange}
                     required
-                    className="text-gray-400 border rounded-lg px-3 py-2 mb-5 text-sm w-full outline-none dark:border-gray-500 dark:bg-gray-900"
+                    className="text-slate-600 dark:text-[#e0e0e0] border rounded-lg px-3 py-2 mb-5 text-sm w-full outline-none dark:border-gray-500 "
                   />
                 </div>
 
                 <div className="mb-2">
-                  <Label className="block mb-2 text-sm font-medium text-[#e0e0e0]">
+                  <Label className="block mb-2 text-sm font-medium text-slate-600 dark:text-[#e0e0e0] ">
                     Fecha
                   </Label>
                   <Input
@@ -211,7 +210,7 @@ const CreateTransactionForm: React.FC = () => {
                     value={form.date}
                     onChange={handleChange}
                     required
-                    className="text-gray-400 border rounded-lg px-3 py-2 mb-5 text-sm w-full outline-none dark:border-gray-500 dark:bg-gray-900"
+                    className="dark:bg-transparent text-slate-600 dark:text-[#e0e0e0] border rounded-lg px-3 py-2 mb-5 text-sm w-full outline-none dark:border-gray-500 "
                   />
                 </div>
 

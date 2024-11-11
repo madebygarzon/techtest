@@ -47,7 +47,7 @@ export function ChartTransactions({
   ];
 
   return (
-    <Card className="flex border-none bg-transparent flex-col">
+    <Card className="flex shadow-none border-none bg-transparent flex-col">
       
       <CardContent className="flex-1 pb-0">
         <ChartContainer
@@ -75,19 +75,19 @@ export function ChartTransactions({
                         y={viewBox.cy}
                         textAnchor="middle"
                         dominantBaseline="middle"
-                         className="text-white"
+                         className="dark:text-white"
                       > 
                         <tspan
                           x={viewBox.cx}
                           y={viewBox.cy}
-                          className="fill-gray-200 text-3xl font-bold"
+                          className="dark:fill-gray-200 fill-slate-700 text-3xl font-bold"
                         > ${" "}
                           {totalMovimientos.toLocaleString()}
                         </tspan>
                         <tspan
                           x={viewBox.cx}
                           y={(viewBox.cy || 0) + 24}
-                          className="fill-white"
+                          className="dark:fill-white"
                         >
                           Consolidado
                         </tspan>
@@ -101,7 +101,7 @@ export function ChartTransactions({
         </ChartContainer>
       </CardContent>
       <CardFooter className=" flex-col gap-2 text-sm">
-        <div className="text-gray-400 flex items-center gap-2 font-medium leading-none">
+        <div className="dark:from-slate-400 dark:to-slate-700 flex items-center gap-2 font-medium leading-none">
           Datos actualizados del total de ingresos y egresos{" "}
           <TrendingUp className="h-4 w-4" />
         </div>

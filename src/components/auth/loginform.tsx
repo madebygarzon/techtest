@@ -51,9 +51,9 @@ const LoginForm: React.FC = () => {
 
   return (
     <TabsContent value="account">
-      <Card className="bg-secondary p-4 border-none shadow-none m-2">
+      <Card className="bg-transparent dark:bg-secondary p-4 border-none shadow-none m-2">
         <div className="flex flex-row p-4">
-          <h1 className="text-3xl mx-auto font-bold text-[#e0e0e0] my-auto">
+          <h1 className="text-3xl mx-auto font-bold text-slate-600 dark:text-[#e0e0e0]  my-auto">
             Iniciar sesión
           </h1>
         </div>
@@ -62,11 +62,11 @@ const LoginForm: React.FC = () => {
           <div className="pb-2">
             <label
               htmlFor="email"
-              className="block mb-2 text-sm font-medium text-[#e0e0e0]"
+              className="block mb-2  text-sm font-medium text-slate-600 dark:text-[#e0e0e0] "
             >
               Correo electrónico
             </label>
-            <div className="relative text-gray-400">
+            <div className="relative text-slate-600 dark:text-[#e0e0e0] ">
               <span className="absolute inset-y-0 left-0 flex items-center p-1 pl-3">
                 <MailIcon />
               </span>
@@ -76,7 +76,7 @@ const LoginForm: React.FC = () => {
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="pl-12 mb-2 bg-transparent text-[#e0e0e0] border sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block w-full p-2.5 py-3 px-4"
+                className="placeholder:text-slate-600 dark:placeholder:text-[#e0e0e0] pl-12 mb-2 bg-transparent text-slate-600 dark:text-[#e0e0e0] border sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none  dark:focus:ring-gray-400 block w-full p-2.5 py-3 px-4"
                 placeholder="name@email.com"
                 required
               />
@@ -85,11 +85,11 @@ const LoginForm: React.FC = () => {
           <div className="pb-6">
             <label
               htmlFor="password"
-              className="block mb-2 text-sm font-medium text-[#e0e0e0]"
+              className="block mb-2 text-sm font-medium text-slate-600 dark:text-[#e0e0e0] ]"
             >
               Contraseña
             </label>
-            <div className="relative text-gray-400">
+            <div className="relative text-slate-600 dark:text-[#e0e0e0] ">
               <span className="absolute inset-y-0 left-0 flex items-center p-1 pl-3">
                 <PassIcon />
               </span>
@@ -100,13 +100,13 @@ const LoginForm: React.FC = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••••"
-                className="pl-12 mb-2 bg-transparent text-[#e0e0e0] border sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block w-full p-2.5 py-3 px-4"
+                className="placeholder:text-slate-600 dark:placeholder:text-[#e0e0e0] pl-12 mb-2 bg-transparent text-slate-600 dark:text-[#e0e0e0]  border sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block w-full p-2.5 py-3 px-4"
                 required
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400"
+                className="text-slate-600 dark:text-[#e0e0e0] absolute inset-y-0 right-0 pr-3 flex items-center"
               >
                 {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
               </button>
@@ -114,7 +114,7 @@ const LoginForm: React.FC = () => {
           </div>
           <Button
             type="submit"
-            className="w-32 mx-auto focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-6"
+            className="w-32  hover:text-[#e0e0e0] mx-auto focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-6"
           >
             {loading && (
               <Loader outerWidth="25" outerHeight="25" innerScale={0.7} />

@@ -83,9 +83,9 @@ const Reports = () => {
     <div>
       <BreadIncoReport />
       <Header />
-      <div className="border border-[#303030] rounded-xl p-10">
+      <div className="border dark:border-[#303030] border-slate-300 rounded-xl p-10">
         <div className="flex justify-between">
-          <h2 className="text-[#e0e0e0] text-2xl font-bold mb-4">Reportes</h2>
+          <h2 className="text-slate-600 dark:text-[#e0e0e0] text-2xl font-bold mb-4">Reportes</h2>
           <div>
             <Button
               onClick={handleClick}
@@ -106,17 +106,17 @@ const Reports = () => {
             totalMovimientos={totalAmount ?? 0}
           />
           <div>
-            <p className="mb-3 text-[#e0e0e0]">Detalle de transacciones</p>
+            <p className="mb-3 text-slate-600 dark:text-[#e0e0e0] ">Detalle de transacciones</p>
             <div>
               <div className="mb-2 flex gap-1 items-center ">
                 <span className=" h-3 w-3 rounded-full bg-[#2662D9] opacity-75"></span>
-                <div className="text-gray-400">
+                <div className="text-slate-600 dark:text-[#e0e0e0] ">
                   Ingresos: ${(totalIngresos ?? 0).toLocaleString()}
                 </div>
               </div>
               <div className="mb-2 flex gap-1 items-center ">
                 <span className=" h-3 w-3 rounded-full bg-[#E23670] opacity-75"></span>
-                <div className="text-gray-400">
+                <div className="text-slate-600 dark:text-[#e0e0e0] ">
                   Egresos: ${(totalEngresos ?? 0).toLocaleString()}
                 </div>
               </div>
@@ -128,9 +128,9 @@ const Reports = () => {
                     <DownloadIcon /> Descargar transacciones
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="bg-secondary  hover:text-black">
+                <DropdownMenuContent className="dark:bg-secondary  dark:hover:text-black">
                   <DropdownMenuLabel>
-                    <p className="text-white">Formato de descarga</p>
+                    <p className="text-slate-600 dark:text-[#e0e0e0]">Formato de descarga</p>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup className="bg-secundary">
@@ -138,7 +138,7 @@ const Reports = () => {
                       className="cursor-pointer text-gray-400"
                       onClick={handleExport}
                     >
-                      <button className="mt-4 mb-4">Formato .xlsx</button>
+                      <button className="mt-4 mb-4 text-slate-600 dark:text-[#e0e0e0] ">Formato .xlsx</button>
                       <DropdownMenuShortcut>
                         <Image
                           src={IconXLSX}
@@ -152,7 +152,7 @@ const Reports = () => {
                       className="cursor-pointer text-gray-400"
                       onClick={handleExportCSV}
                     >
-                      <button className="mt-4 mb-4 ">Formato .csv</button>
+                      <button className="mt-4 mb-4 text-slate-600 dark:text-[#e0e0e0] ">Formato .csv</button>
                       <DropdownMenuShortcut>
                         <Image
                           src={IconCSV}

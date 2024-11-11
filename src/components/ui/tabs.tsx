@@ -29,8 +29,8 @@ const TabsTrigger = React.forwardRef<
     ref={ref}
     className={cn(
       "rounded  transition-colors duration-300",
-      "data-[state=active]:bg-black data-[state=active]:text-[#e0e0e0]",
-      "data-[state=inactive]:bg-transparent data-[state=inactive]:text-gray-500",
+      "data-[state=active]:bg-slate-100 dark:data-[state=active]:bg-black data-[state=active]:text-slate-400 ",
+      "data-[state=inactive]:bg-transparent data-[state=inactive]:text-slate-100 dark:data-[state=inactive]:text-gray-400 dark:data-[state=active]:text-[#e0e0e0]",
       className
     )}
     {...props}

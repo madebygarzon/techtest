@@ -24,7 +24,7 @@ const MenuItems = () => {
   const isAdmin = session?.user?.role === "Admin";
 
   return (
-    <div className="bg-secondary flex h-full items-center gap-4 justify-center">
+    <div className="flex h-full items-center gap-4 justify-center">
       <ItemIncoexpe />
       {isAdmin && <ItemUsers />}
       {isAdmin && <ItemReports />}

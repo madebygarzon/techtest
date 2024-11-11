@@ -57,7 +57,7 @@ const FooterSideBar = () => {
               >
                 <div className="flex gap-1 items-center">
                   <span className="h-3 w-3 rounded-full bg-green-400 opacity-75"></span>
-                  <div>
+                  <div className="text-white">
                     {isLoading ? (
                       <Loader
                         outerWidth="20"
@@ -74,17 +74,14 @@ const FooterSideBar = () => {
               </Button>
             </div>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="bg-primary text-gray-400 w-56">
-            <DropdownMenuLabel className="text-[#e0e0e0]">
+          <DropdownMenuContent className="dark:bg-primary hover:text-slate-100 bg-slate-400 text-white dark:text-gray-400 w-56">
+            <DropdownMenuLabel className="">
               Mi cuenta
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 {user ? user.name : "Cargando..."}
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                {user ? user.role : "Cargando..."}
               </DropdownMenuItem>
               <DropdownMenuItem>
                 {user ? user.email : "Cargando..."}

@@ -107,13 +107,13 @@ const Transactions = () => {
     <div className="">
       <BreadIncoExpen />
       <Header />
-      <div className="border border-[#303030] rounded-xl  py-8 px-4 max-w-full">
+      <div className="border dark:border-[#303030] border-slate-300 rounded-xl  py-8 px-4 max-w-full">
         <div className="flex justify-between">
           <div className="gap-0">
-            <h2 className="relative ml-1 text-2xl text-[#e0e0e0] font-bold">
+            <h2 className="relative ml-1 text-2xl text-slate-600 dark:text-[#e0e0e0] font-bold">
               Transacciones
             </h2>
-            <p className="ml-1 text-sm text-gray-400">Total de movimientos: $ {totalAmount?.toLocaleString("es-CO")}</p>
+            <p className="ml-1 text-sm text-slate-500 dark:text-gray-400">Total de movimientos: $ {totalAmount?.toLocaleString("es-CO")}</p>
           </div>
 
           <div className="mb-6 flex items-center justify-end gap-4">
@@ -122,7 +122,7 @@ const Transactions = () => {
                 value={selectedType}
                 onValueChange={(value) => setSelectedType(value)}
               >
-                <SelectTrigger className="w-[180px] pl-12 bg-transparent text-[#e0e0e0] border border-gray-400 sm:text-sm rounded-lg ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 p-2.5 py-3">
+                <SelectTrigger className="w-[180px] pl-12 text-slate-600 dark:text-[#e0e0e0] border border-gray-400 sm:text-sm rounded-lg ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 p-2.5 py-3">
                   <FilterIcon />
                   <SelectValue placeholder="Filtrar por Tipo" />
                 </SelectTrigger>
@@ -136,8 +136,8 @@ const Transactions = () => {
               </Select>
             </div>
 
-            <div className="relative text-gray-400">
-              <span className="absolute inset-y-0 left-0 flex items-center p-1 pl-3">
+            <div className="relative text-slate-600 dark:text-[#e0e0e0] ">
+              <span className="text-slate-600 dark:text-[#e0e0e0] absolute inset-y-0 left-0 flex items-center p-1 pl-3">
                 <UserIcon />
               </span>
               <input
@@ -145,7 +145,7 @@ const Transactions = () => {
                 value={userSearch}
                 onChange={(e) => setUserSearch(e.target.value)}
                 placeholder="Filtrar por Usuario"
-                className="w-64 h-9 pl-12  bg-transparent text-[#e0e0e0] border border-slate-400  sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block  p-2.5 py-3 px-4"
+                className="w-64 h-9 pl-12  bg-transparent text-slate-600 dark:text-[#e0e0e0] border border-slate-400  sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block  p-2.5 py-3 px-4"
               />
             </div>
             
@@ -166,13 +166,13 @@ const Transactions = () => {
         <div className="max-h-[50vh] mt-8 overflow-y-auto">
           <Table className="w-full">
             <TableHeader>
-              <TableRow className="hover:bg-[#3030302c] border-b border-gray-500">
-                <TableHead className="text-[#e0e0e0] text-lg">
+              <TableRow className="hover:bg-[#cecece2c] dark:hover:bg-[#3030302c] border-b border-gray-500">
+                <TableHead className="text-slate-600 dark:text-[#e0e0e0] text-lg">
                   Concepto
                 </TableHead>
-                <TableHead className="text-[#e0e0e0] text-lg">Monto</TableHead>
-                <TableHead className="text-[#e0e0e0] text-lg">Fecha</TableHead>
-                <TableHead className="text-[#e0e0e0] text-lg">
+                <TableHead className="text-slate-600 dark:text-[#e0e0e0] text-lg">Monto</TableHead>
+                <TableHead className="text-slate-600 dark:text-[#e0e0e0] text-lg">Fecha</TableHead>
+                <TableHead className="text-slate-600 dark:text-[#e0e0e0] text-lg">
                   Usuario
                 </TableHead>
               </TableRow>
@@ -181,19 +181,19 @@ const Transactions = () => {
               <TableBody>
                 {filteredTransactions.map((transaction: Transaction) => (
                   <TableRow
-                    className="text-gray-400 hover:bg-[#3030302c] hover:text-[#e0e0e0] border-b border-b-[#303030]"
+                    className="text-slate-600 dark:text-[#e0e0e0] hover:bg-[#cecece2c] dark:hover:bg-[#3030302c] hover:text-slate-800 dark:hover:text-[#e0e0e0] border-b border-b-[#303030]"
                     key={transaction.id}
                   >
-                    <TableCell className="border border-[#303030]">
+                    <TableCell className="border hover:bg-[#cecece2c] dark:hover:bg-[#3030302c]">
                       {transaction.type}
                     </TableCell>
-                    <TableCell className="border border-[#303030]">
+                    <TableCell className="border hover:bg-[#cecece2c] dark:hover:bg-[#3030302c]">
                       $ {transaction.amount.toLocaleString("es-CO")}
                     </TableCell>
-                    <TableCell className="border border-[#303030]">
+                    <TableCell className="border hover:bg-[#cecece2c] dark:hover:bg-[#3030302c]">
                       {transaction.date}
                     </TableCell>
-                    <TableCell className="border border-[#303030]">
+                    <TableCell className="border hover:bg-[#cecece2c] dark:hover:bg-[#3030302c]">
                       {transaction.userId.name}
                     </TableCell>
                   </TableRow>
@@ -203,34 +203,34 @@ const Transactions = () => {
               <p>No se encontraron transacciones.</p>
             )}
 
-            <TableFooter className="hover:bg-[#3030302c] bg-transparent pt-4">
-              <TableRow className="hover:bg-[#3030302c]">
-                <TableCell className="border-l border-l-[#303030] border-b border-b-[#303030] font-bold text-gray-400">
+            <TableFooter className="hover:bg-[#cecece2c] dark:hover:bg-[#3030302c] bg-transparent pt-4">
+              <TableRow className="hover:bg-[#cecece2c] dark:hover:bg-[#3030302c]">
+                <TableCell className="border-l dark:border-l-[#303030] border-b dark:border-b-[#303030] font-bold dark:text-gray-400">
                   Total Ingresos
                 </TableCell>
-                <TableCell className="border-b border-b-[#303030]"></TableCell>
-                <TableCell className="border-b border-b-[#303030]"></TableCell>
-                <TableCell className="border-b border-b-[#303030] text-[#e0e0e0] border-r border-r-[#303030]">
+                <TableCell className="border-b dark:border-b-[#303030]"></TableCell>
+                <TableCell className="border-b dark:border-b-[#303030]"></TableCell>
+                <TableCell className="border-b dark:border-b-[#303030] text-slate-600 dark:text-[#e0e0e0] border-r ">
                   $ {totalIngresos?.toLocaleString("es-CO")}
                 </TableCell>
               </TableRow>
-              <TableRow className="hover:bg-[#3030302c]">
-                <TableCell className="border-l border-l-[#303030] border-b border-b-[#303030] font-bold text-gray-400">
+              <TableRow className="hover:bg-[#cecece2c] dark:hover:bg-[#3030302c]">
+                <TableCell className="border-l dark:border-b-[#303030] border-b  font-bold dark:text-gray-400">
                   Total Egresos
                 </TableCell>
-                <TableCell className="border-b border-b-[#303030]"></TableCell>
-                <TableCell className="border-b border-b-[#303030]"></TableCell>
-                <TableCell className="border-b border-b-[#303030] border-r border-r-[#303030] text-[#e0e0e0]">
+                <TableCell className="border-b dark:border-b-[#303030]"></TableCell>
+                <TableCell className="border-b dark:border-b-[#303030]"></TableCell>
+                <TableCell className="border-b dark:border-b-[#303030] border-r dark:border-r-[#303030] text-slate-600 dark:text-[#e0e0e0] ">
                   $ {totalEngresos?.toLocaleString("es-CO")}
                 </TableCell>
               </TableRow>
-              <TableRow className="hover:bg-[#3030302c]">
-                <TableCell className="border-b border-l border-l-[#303030] border-b-[#303030] font-bold text-gray-400">
+              <TableRow className="hover:bg-[#cecece2c] dark:hover:bg-[#3030302c]">
+                <TableCell className="border-b border-l dark:border-l-[#303030] dark:border-b-[#303030] font-bold dark:text-gray-400">
                   Total Movimientos
                 </TableCell>
-                <TableCell className="border-b border-b-[#303030]"></TableCell>
-                <TableCell className="border-b border-b-[#303030]"></TableCell>
-                <TableCell className="border-b border-r border-r-[#303030] border-b-[#303030] text-[#e0e0e0]">
+                <TableCell className="border-b dark:border-b-[#303030]"></TableCell>
+                <TableCell className="border-b dark:border-b-[#303030]"></TableCell>
+                <TableCell className="border-b border-r dark:border-b-[#303030] text-slate-600 dark:text-[#e0e0e0] ">
                   $ {totalAmount?.toLocaleString("es-CO")}
                 </TableCell>
               </TableRow>

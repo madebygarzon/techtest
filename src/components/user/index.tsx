@@ -114,16 +114,16 @@ const Users = () => {
     <div>
       <BreadIncoUser />
       <Header />
-      <div className="border border-[#303030] rounded-xl  py-8 px-4 max-w-full">
+      <div className="border dark:border-[#303030] border-slate-300 rounded-xl  py-8 px-4 max-w-full">
         <div className="flex justify-between">
           <div>
-            <h2 className="relative ml-1 text-2xl text-[#e0e0e0] font-bold mb-4">
+            <h2 className="relative ml-1 text-2xl text-slate-600 dark:text-[#e0e0e0] font-bold mb-4">
               Usuarios
             </h2>
           </div>
 
           <div className="mb-6 flex items-center justify-end gap-4">
-            <div className="relative text-gray-400">
+            <div className="relative text-slate-600 dark:text-[#e0e0e0]">
               <span className="absolute inset-y-0 left-0 flex items-center p-1 pl-3">
                 <UserIcon />
               </span>
@@ -151,13 +151,13 @@ const Users = () => {
         <div className=" max-h-[50vh] mt-8 overflow-y-auto">
           <Table className="w-full">
             <TableHeader>
-              <TableRow className="hover:bg-[#3030302c] border-b border-gray-500">
-                <TableHead className="text-[#e0e0e0] text-lg">Nombre</TableHead>
-                <TableHead className="text-[#e0e0e0] text-lg">Email</TableHead>
-                <TableHead className="text-[#e0e0e0] text-lg">
+              <TableRow className="hover:bg-[#cecece2c] dark:hover:bg-[#3030302c] border-b border-gray-500">
+                <TableHead className="text-slate-600 dark:text-[#e0e0e0] text-lg">Nombre</TableHead>
+                <TableHead className="text-slate-600 dark:text-[#e0e0e0] text-lg">Email</TableHead>
+                <TableHead className="text-slate-600 dark:text-[#e0e0e0] text-lg">
                   Teléfono
                 </TableHead>
-                <TableHead className="text-[#e0e0e0] text-lg">
+                <TableHead className="text-slate-600 dark:text-[#e0e0e0] text-lg">
                   Acciones
                 </TableHead>
               </TableRow>
@@ -167,23 +167,23 @@ const Users = () => {
               <TableBody>
                 {filteredUsers.map((user: User) => (
                   <TableRow
-                    className="text-gray-400 hover:bg-[#3030302c] hover:text-[#e0e0e0] border-b border-b-[#303030]"
+                    className="text-slate-600 dark:text-[#e0e0e0] hover:bg-[#cecece2c] dark:hover:bg-[#3030302c] hover:text-slate-800 dark:hover:text-[#e0e0e0] border-b border-b-[#303030]"
                     key={user.id}
                   >
-                    <TableCell className="border border-[#303030]">
+                    <TableCell className="border dark:border-[#303030]">
                       {user.name}
                     </TableCell>
-                    <TableCell className="border border-[#303030]">
+                    <TableCell className="border dark:border-[#303030]">
                       {user.email}
                     </TableCell>
-                    <TableCell className="border border-[#303030]">
+                    <TableCell className="border dark:border-[#303030]">
                       {user.phone}
                     </TableCell>
-                    <TableCell className="border border-[#303030]">
+                    <TableCell className="border dark:border-[#303030]">
                       <Sheet>
                         <SheetTrigger asChild>
                           <Button
-                            className="border-none bg-primary hover:bg-primary hover:text-white text-gray-400"
+                            className="border-none    dark:text-gray-400"
                             variant="outline"
                             onClick={() => handleEditClick(user)}
                           >
@@ -191,18 +191,18 @@ const Users = () => {
                             Editar usuario
                           </Button>
                         </SheetTrigger>
-                        <SheetContent className="w-[500px] bg-secondary p-0 border-l border-l-gray-400 rounded-none">
-                          <div className=" flex  justify-center items-center h-screen dark:bg-gray-900">
+                        <SheetContent className="w-[500px] bg-slate-100 dark:bg-secondary p-0 border-l border-l-gray-400 rounded-none">
+                          <div className=" flex  justify-center items-center h-screen ">
                             <div className="relative">
-                              <div className="min-h-96  py-6 text-left rounded-xl shadow-lg">
-                                <h1 className="text-[#e0e0e0] text-2xl font-bold my-6 flex justify-center">
+                              <div className="min-h-96  py-6 text-left ">
+                                <h1 className="text-slate-600 dark:text-[#e0e0e0] text-2xl font-bold my-6 flex justify-center">
                                   Editar usuario
                                 </h1>
 
                                 <div className="mb-2">
                                   <Label
                                     htmlFor="name"
-                                    className="w-80 bg-transparent block mb-2 text-sm font-medium text-[#e0e0e0]"
+                                    className="w-80 bg-transparent block mb-2 text-sm font-medium text-slate-600 dark:text-[#e0e0e0]"
                                   >
                                     Nombre
                                   </Label>
@@ -210,14 +210,14 @@ const Users = () => {
                                     id="name"
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
-                                    className="col-span-3"
+                                    className="text-slate-600 dark:text-[#e0e0e0] col-span-3"
                                   />
                                 </div>
 
                                 <div className="mb-2">
                                   <Label
                                     htmlFor="role"
-                                    className="w-80 bg-transparent block mb-2 text-sm font-medium text-[#e0e0e0]"
+                                    className="w-80 bg-transparent block mb-2 text-sm font-medium text-slate-600 dark:text-[#e0e0e0]"
                                   >
                                     Rol
                                   </Label>
@@ -225,17 +225,17 @@ const Users = () => {
                                     id="role"
                                     value={role}
                                     onChange={(e) => setRole(e.target.value)}
-                                    className="bg-transparent text-gray-400 border rounded-lg px-3 py-2 mb-5 text-sm w-full outline-none dark:border-gray-500 dark:bg-gray-900"
+                                    className="dark:bg-secondary bg-slate-100 text-slate-600 dark:text-[#e0e0e0] border rounded-lg px-3 py-2 mb-5 text-sm w-full outline-none dark:border-gray-500 "
                                   >
-                                    <option
-                                      style={{ backgroundColor: "#000000" }}
+                                    <option                                      
                                       value="User"
+                                      className="dark:bg-secondary bg-slate-100 text-slate-600 dark:text-[#e0e0e0]"
                                     >
                                       User
                                     </option>
-                                    <option
-                                      style={{ backgroundColor: "#000000" }}
+                                    <option                                      
                                       value="Admin"
+                                      className="dark:bg-secondary bg-slate-100 text-slate-600 dark:text-[#e0e0e0]"
                                     >
                                       Admin
                                     </option>

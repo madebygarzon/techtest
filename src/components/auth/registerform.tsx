@@ -139,9 +139,9 @@ const RegisterForm: React.FC = () => {
 
   return (
     <TabsContent value="password">
-      <Card className="bg-secondary p-4 border-none shadow-none m-2">
+      <Card className="dark:bg-secondary bg-transparent p-4 border-none shadow-none m-2">
         <div className="flex flex-row p-4 ">
-          <h1 className="text-3xl mx-auto font-bold text-[#e0e0e0] my-auto">
+          <h1 className="text-3xl mx-auto font-bold text-slate-600 dark:text-[#e0e0e0] my-auto">
             Registrarme
           </h1>
         </div>
@@ -150,17 +150,17 @@ const RegisterForm: React.FC = () => {
           <div className="pb-2">
             <label
               htmlFor="email"
-              className="block mb-2 text-sm font-medium text-[#e0e0e0]"
+              className="block mb-2 text-sm font-medium text-slate-600 dark:text-[#e0e0e0]"
             >
               Correo electrónico
             </label>
-            <div className="relative text-gray-400">
+            <div className="relative text-slate-600 dark:text-[#e0e0e0]">
               <span className="absolute inset-y-0 left-0 flex items-center p-1 pl-3">
                 <MailIcon />
               </span>
               <input
                 placeholder="Correo electrónico"
-                className="pl-12 mb-2 bg-transparent text-[#e0e0e0] border  sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block w-full p-2.5 py-3 px-4"
+                className="placeholder:text-slate-600 dark:placeholder:text-gray-400 pl-12 mb-2 bg-transparent text-slate-600 dark:text-[#e0e0e0]] border  sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block w-full p-2.5 py-3 px-4"
                 type="email"
                 name="email"
                 value={form.email}
@@ -174,11 +174,11 @@ const RegisterForm: React.FC = () => {
             <div className="pb-2">
               <label
                 htmlFor="name"
-                className="block mb-2 text-sm font-medium text-[#e0e0e0]"
+                className="block mb-2 text-sm font-medium text-slate-600 dark:text-[#e0e0e0]"
               >
                 Nombre
               </label>
-              <div className="relative text-gray-400">
+              <div className="relative text-slate-600 dark:text-[#e0e0e0]">
                 <span className="absolute inset-y-0 left-0 flex items-center p-1 pl-3">
                   <NameInputIcon />
                 </span>
@@ -190,7 +190,7 @@ const RegisterForm: React.FC = () => {
                   onChange={handleChange}
                   required
                   autoComplete="off"
-                  className="pl-12 mb-2 bg-transparent text-[#e0e0e0] border  sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block w-full p-2.5 py-3 px-4"
+                  className="placeholder:text-slate-600 dark:placeholder:text-gray-400 pl-12 mb-2 bg-transparent text-slate-600 dark:text-[#e0e0e0] border  sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block w-full p-2.5 py-3 px-4"
                 />
               </div>
             </div>
@@ -198,17 +198,17 @@ const RegisterForm: React.FC = () => {
             <div className="pb-2">
               <label
                 htmlFor="phone"
-                className="block mb-2 text-sm font-medium text-[#e0e0e0]"
+                className="block mb-2 text-sm font-medium text-slate-600 dark:text-[#e0e0e0]"
               >
                 Teléfono
               </label>
-              <div className="relative text-gray-400">
+              <div className="relative text-slate-600 dark:text-[#e0e0e0]">
                 <span className="absolute inset-y-0 left-0 flex items-center p-1 pl-3">
                   <PhoneIcon />
                 </span>
                 <input
                   placeholder="Teléfono"
-                  className="pl-12 mb-2 bg-transparent text-[#e0e0e0] border  sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block w-full p-2.5 py-3 px-4"
+                  className="placeholder:text-slate-600 dark:placeholder:text-gray-400 pl-12 mb-2 bg-transparent text-slate-600 dark:text-[#e0e0e0] border  sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block w-full p-2.5 py-3 px-4"
                   type="text"
                   name="phone"
                   value={form.phone}
@@ -223,17 +223,17 @@ const RegisterForm: React.FC = () => {
             <div className="pb-2">
               <label
                 htmlFor="password"
-                className="block mb-2 text-sm font-medium text-[#e0e0e0]"
+                className="block mb-2 text-sm font-medium text-slate-600 dark:text-[#e0e0e0]"
               >
                 Contraseña
               </label>
-              <div className="relative text-gray-400">
+              <div className="relative text-slate-600 dark:text-[#e0e0e0]">
                 <span className="absolute inset-y-0 left-0 flex items-center p-1 pl-3">
                   <PassIcon />
                 </span>
                 <input
                   placeholder="••••••••••"
-                  className="pl-12 mb-2 bg-transparent text-[#e0e0e0] border sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block w-full p-2.5 py-3 px-4"
+                  className="placeholder:text-slate-600 dark:placeholder:text-gray-400 pl-12 mb-2 bg-transparent text-slate-600 dark:text-[#e0e0e0] border sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block w-full p-2.5 py-3 px-4"
                   type={showPassword ? "text" : "password"}
                   name="password"
                   value={form.password}
@@ -243,7 +243,7 @@ const RegisterForm: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-600 dark:text-[#e0e0e0]"
                 >
                   {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
                 </button>
@@ -253,17 +253,17 @@ const RegisterForm: React.FC = () => {
             <div className="pb-2">
               <label
                 htmlFor="confirmPassword"
-                className="block mb-2 text-sm font-medium text-[#e0e0e0]"
+                className="block mb-2 text-sm font-medium text-slate-600 dark:text-[#e0e0e0]"
               >
-                Confirmar Contraseña
+                Confirmar contraseña
               </label>
-              <div className="relative text-gray-400">
+              <div className="relative text-slate-600 dark:text-[#e0e0e0]">
                 <span className="absolute inset-y-0 left-0 flex items-center p-1 pl-3">
                   <PassIcon />
                 </span>
                 <input
                   placeholder="••••••••••"
-                  className="pl-12 mb-2 bg-transparent text-[#e0e0e0] border sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block w-full p-2.5 py-3 px-4"
+                  className="placeholder:text-slate-600 dark:placeholder:text-gray-400 pl-12 mb-2 bg-transparent text-slate-600 dark:text-[#e0e0e0] border sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block w-full p-2.5 py-3 px-4"
                   type={showPassword ? "text" : "password"}
                   name="confirmPassword"
                   value={form.confirmPassword}
@@ -273,7 +273,7 @@ const RegisterForm: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-600 dark:text-[#e0e0e0]"
                 >
                   {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
                 </button>
@@ -281,7 +281,7 @@ const RegisterForm: React.FC = () => {
             </div>
           </div>
           <div className="flex w-full gap-2">
-            <div className="mt-2 w-1/2 h-2 rounded bg-gray-300">
+            <div className="placeholder:text-slate-600 dark:placeholder:text-gray-400 mt-2 w-1/2 h-2 rounded bg-gray-300">
               <div
                 className={`h-full rounded ${
                   passwordStrength === 4
@@ -294,7 +294,7 @@ const RegisterForm: React.FC = () => {
               ></div>
             </div>
             <div>
-              <p className="text-gray-400 text-[10px] ">
+              <p className="text-slate-600 dark:text-[#e0e0e0] text-[10px] ">
                 Tu contraseña debe contener al menos 8 caracteres, incluyendo
                 una letra mayúscula, una letra minúscula y un número.
               </p>
@@ -316,7 +316,7 @@ const RegisterForm: React.FC = () => {
 
           <Button
             type="submit"
-            className="w-32 mx-auto focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2"
+            className="w-32 text-slate-600 dark:text-[#e0e0e0] hover:text-[#e0e0e0] mx-auto focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2"
           >
             {loading && (
               <Loader outerWidth="25" outerHeight="25" innerScale={0.7} />

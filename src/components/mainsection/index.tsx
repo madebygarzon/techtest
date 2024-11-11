@@ -11,35 +11,35 @@ import MenuItems from "@/components/home/menuitems";
 const MainSection = () => {
   return (
     <Tabs defaultValue="home" className="w-full h-screen max-h-screen flex overflow-y-auto">
-      <TabsList className="w-[270px] top-0 left-0 flex-col items-start max-h-screen bg-primary overflow-y-auto">
+      <TabsList className="w-[270px] top-0 left-0 flex-col items-start max-h-screen bg-slate-400 dark:bg-primary overflow-y-auto">
         <HeaderSideBar />
         <ItemsSideBar />
         <FooterSideBar />
       </TabsList>
       <div className="flex-grow max-h-screen overflow-y-auto">
         <TabsContent value="home" className="h-full max-h-screen overflow-y-auto">
-          <Card className="bg-secondary border-none h-full max-h-screen">
+          <Card className="dark:bg-secondary bg-slate-100 border-none h-full max-h-screen">
             <CardContent className="h-full max-h-screen">
               <MenuItems />
             </CardContent>
           </Card>
         </TabsContent>
         <TabsContent value="incomesexpenses" className="h-full max-h-screen overflow-y-auto">
-          <Card className="bg-secondary border-none h-full max-h-screen">
+          <Card className="dark:bg-secondary bg-slate-100 border-none h-full max-h-screen">
             <CardContent className="p-6">
               <IncomesExpenses />
             </CardContent>
           </Card>
         </TabsContent>
         <TabsContent value="users" className="h-full max-h-screen overflow-y-auto">
-          <Card className="bg-secondary border-none h-full max-h-screen">
+          <Card className="dark:bg-secondary bg-slate-100 border-none h-full max-h-screen">
             <CardContent className="p-6">
               <Users />
             </CardContent>
           </Card>
         </TabsContent>
         <TabsContent value="reports" className="h-full max-h-screen overflow-y-auto">
-          <Card className="bg-secondary border-none h-full max-h-screen">
+          <Card className="dark:bg-secondary bg-slate-100 border-none h-full max-h-screen">
             <CardContent className="p-6">
               <Reports />
             </CardContent>
