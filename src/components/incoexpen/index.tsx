@@ -113,7 +113,9 @@ const Transactions = () => {
             <h2 className="relative ml-1 text-2xl text-slate-600 dark:text-[#e0e0e0] font-bold">
               Transacciones
             </h2>
-            <p className="ml-1 text-sm text-slate-500 dark:text-gray-400">Total de movimientos: $ {totalAmount?.toLocaleString("es-CO")}</p>
+            <p className="ml-1 text-sm text-slate-500 dark:text-gray-400">
+              Total de movimientos: $ {totalAmount?.toLocaleString("es-CO")}
+            </p>
           </div>
 
           <div className="mb-6 flex items-center justify-end gap-4">
@@ -126,9 +128,14 @@ const Transactions = () => {
                   <FilterIcon />
                   <SelectValue placeholder="Filtrar por Tipo" />
                 </SelectTrigger>
-                <SelectContent>
+
+                <SelectContent className="bg-slate-100 dark:bg-secondary">
                   {uniqueTypes.map((type) => (
-                    <SelectItem key={type} value={type}>
+                    <SelectItem
+                      className=" bg-slate-100 text-gray-400 dark:bg-transparent"
+                      key={type}
+                      value={type}
+                    >
                       {type}
                     </SelectItem>
                   ))}
@@ -145,10 +152,10 @@ const Transactions = () => {
                 value={userSearch}
                 onChange={(e) => setUserSearch(e.target.value)}
                 placeholder="Filtrar por Usuario"
-                className="w-64 h-9 pl-12  bg-transparent text-slate-600 dark:text-[#e0e0e0] border border-slate-400  sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block  p-2.5 py-3 px-4"
+                className="w-64 h-9 pl-12 placeholder:text-slate-600 dark:placeholder:text-[#e0e0e0]  bg-transparent text-slate-600 dark:text-[#e0e0e0] border border-slate-400  sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block  p-2.5 py-3 px-4"
               />
             </div>
-            
+
             <div>{isAdmin && <CreateTransactionForm />}</div>
 
             <Button
@@ -170,8 +177,12 @@ const Transactions = () => {
                 <TableHead className="text-slate-600 dark:text-[#e0e0e0] text-lg">
                   Concepto
                 </TableHead>
-                <TableHead className="text-slate-600 dark:text-[#e0e0e0] text-lg">Monto</TableHead>
-                <TableHead className="text-slate-600 dark:text-[#e0e0e0] text-lg">Fecha</TableHead>
+                <TableHead className="text-slate-600 dark:text-[#e0e0e0] text-lg">
+                  Monto
+                </TableHead>
+                <TableHead className="text-slate-600 dark:text-[#e0e0e0] text-lg">
+                  Fecha
+                </TableHead>
                 <TableHead className="text-slate-600 dark:text-[#e0e0e0] text-lg">
                   Usuario
                 </TableHead>
@@ -200,7 +211,9 @@ const Transactions = () => {
                 ))}
               </TableBody>
             ) : (
-              <p>No se encontraron transacciones.</p>
+              <p className="h-10 flex items-center justify-center">
+                ¡No se encontraron transacciones!
+              </p>
             )}
 
             <TableFooter className="hover:bg-[#cecece2c] dark:hover:bg-[#3030302c] bg-transparent pt-4">
