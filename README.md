@@ -2,8 +2,6 @@
 
 ## Descripción
 
-**TechTest** Es un proyecto que hace parte de una prueba técnica que busca evaluar las habilidades de desarrollo en una aplicación fullstack. Está basado en **Next.js** y utiliza varias bibliotecas y herramientas para la gestión de usuarios y movimientos financieros, tales como **Prisma**, **Apollo Server**, **NextAuth**, y **TailwindCSS**. Este proyecto está configurado para desarrollarse en local y para ser fácilmente desplegado en **Vercel**.
-
 **TechTest** es un proyecto diseñado como parte de una evaluación técnica orientada a medir habilidades en el desarrollo de aplicaciones fullstack. Construido sobre **Next.js** y **TypeScript**, integra una serie de bibliotecas y herramientas avanzadas, entre las que destacan **Prisma**, **Apollo** **Server**, **NextAuth** y **TailwindCSS**, para la gestión de usuarios y el control de movimientos financieros. La configuración de TechTest facilita tanto el desarrollo en un entorno local como su despliegue rápido y sencillo en Vercel.
 
 ## Requisitos previos
