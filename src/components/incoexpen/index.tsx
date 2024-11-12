@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
 import { GET_TRANSACTIONS } from "../../graphql/index";
-import { BreadIncoExpen } from "@/components/breadcrumb";
-import Header from "@/components/header";
+import { BreadIncoExpen } from "@/components/breadcrumb"; // Componente para mostrar la ruta de navegación
+import Header from "@/components/header"; // Encabezado de la página
 import {
   Table,
   TableBody,
@@ -11,20 +11,21 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import CreateTransactionForm from "@/components/incoexpen/createtrans";
-import { FilterIcon, UserIcon, RefreshIcon } from "@/components/ui/icons";
+} from "@/components/ui/table"; // Componentes para estructurar la tabla
+import CreateTransactionForm from "@/components/incoexpen/createtrans"; // Formulario para crear una nueva transacción
+import { FilterIcon, UserIcon, RefreshIcon } from "@/components/ui/icons"; // Iconos utilizados en los filtros y botones
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import Loader from "@/components/ui/loader";
+} from "@/components/ui/select"; // Componentes del menú select para el filtro
+import Loader from "@/components/ui/loader"; // Componente de carga
 import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 
+// Extendiendo interfaces de "next-auth" para incluir datos de usuario y rol
 declare module "next-auth" {
   interface Session {
     user: {
@@ -40,6 +41,7 @@ declare module "next-auth" {
   }
 }
 
+// Definición de la interfaz de transacciones
 interface Transaction {
   id: string;
   type: string;
@@ -51,32 +53,34 @@ interface Transaction {
 }
 
 const Transactions = () => {
-  const [isClicked, setIsClicked] = useState(false);
+  const [isClicked, setIsClicked] = useState(false); // Estado para mostrar la animación de carga en el botón de actualización
   const handleClick = async () => {
-    setIsClicked(true);
-    await refetch();
-    setIsClicked(false);
+    setIsClicked(true); // Activa el estado de carga
+    await refetch(); // Refresca los datos al hacer clic
+    setIsClicked(false); // Desactiva el estado de carga
   };
 
+  // Query para obtener las transacciones
   const { data, loading, error, refetch } = useQuery<{
     transactions: Transaction[];
   }>(GET_TRANSACTIONS);
 
-  const { data: session } = useSession();
-  const isAdmin = session?.user?.role === "Admin";
+  const { data: session } = useSession(); // Obtiene la sesión de autenticación
+  const isAdmin = session?.user?.role === "Admin"; // Verifica si el usuario tiene rol de Admin
 
-  const [selectedType, setSelectedType] = useState("");
-  const [userSearch, setUserSearch] = useState("");
+  const [selectedType, setSelectedType] = useState(""); // Estado para el filtro de tipo de transacción
+  const [userSearch, setUserSearch] = useState(""); // Estado para el filtro de búsqueda de usuario
 
   if (loading)
     return (
       <div className="h-screen flex items-center justify-center">
-        <Loader outerWidth="100" outerHeight="100" innerScale={0.7} />
+        <Loader outerWidth="100" outerHeight="100" innerScale={0.7} /> {/* Componente de carga */}
       </div>
     );
 
-  if (error) return <p>Error: {error.message}</p>;
+  if (error) return <p>Error: {error.message}</p>; // Muestra el error si ocurre alguno
 
+  // Filtra las transacciones según el tipo y el nombre de usuario
   const filteredTransactions = data?.transactions.filter(
     (transaction) =>
       (selectedType === "" || transaction.type === selectedType) &&
@@ -86,10 +90,12 @@ const Transactions = () => {
           .includes(userSearch.toLowerCase()))
   );
 
+  // Obtiene los tipos de transacción únicos
   const uniqueTypes = [
     ...new Set(data?.transactions.map((t) => t.type)),
   ].filter(Boolean);
 
+  // Calcula los totales de montos
   const totalAmount = filteredTransactions?.reduce(
     (acc, transaction) => acc + transaction.amount,
     0
@@ -143,6 +149,7 @@ const Transactions = () => {
               </Select>
             </div>
 
+            {/* Input de búsqueda para filtrar por usuario */}
             <div className="relative text-slate-600 dark:text-[#e0e0e0] ">
               <span className="text-slate-600 dark:text-[#e0e0e0] absolute inset-y-0 left-0 flex items-center p-1 pl-3">
                 <UserIcon />
@@ -156,7 +163,7 @@ const Transactions = () => {
               />
             </div>
 
-            <div>{isAdmin && <CreateTransactionForm />}</div>
+            <div>{isAdmin && <CreateTransactionForm />}</div> {/* Formulario de creación visible solo para Admin */}
 
             <Button
               onClick={handleClick}
@@ -164,12 +171,13 @@ const Transactions = () => {
             >
               <RefreshIcon /> Actualizar{" "}
               {isClicked && (
-                <Loader outerWidth="25" outerHeight="25" innerScale={0.7} />
+                <Loader outerWidth="25" outerHeight="25" innerScale={0.7} /> 
               )}
             </Button>
           </div>
         </div>
 
+        {/* Tabla de transacciones */}
         <div className="max-h-[50vh] mt-8 overflow-y-auto">
           <Table className="w-full">
             <TableHeader>

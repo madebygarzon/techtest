@@ -160,7 +160,7 @@ export const RegisterForm: React.FC = () => {
               </span>
               <input
                 placeholder="Correo electrónico"
-                className="placeholder:text-slate-600 dark:placeholder:text-gray-400 pl-12 mb-2 bg-transparent text-slate-600 dark:text-[#e0e0e0]] border  sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block w-full p-2.5 py-3 px-4"
+                className="placeholder:text-slate-600 dark:placeholder:text-gray-400 pl-12 mb-2 bg-transparent text-slate-600 dark:text-[#e0e0e0] border  sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block w-full p-2.5 py-3 px-4"
                 type="email"
                 name="email"
                 value={form.email}

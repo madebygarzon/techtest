@@ -4,7 +4,7 @@ import {
   CREATE_TRANSACTION,
   GET_USERS,
   GET_TRANSACTIONS,
-} from "../../graphql/index";
+} from "../../graphql/index"; // Queries y mutations para obtener y crear transacciones y usuarios
 import Swal from "sweetalert2";
 import { PlusIcon } from "@/components/ui/icons";
 import { Button } from "@/components/ui/button";
@@ -16,18 +16,21 @@ import {
   SheetContent,
   SheetFooter,
   SheetTrigger,
-} from "@/components/ui/sheet";
+} from "@/components/ui/sheet"; // Componentes de UI para modal tipo sheet
 import Loader from "@/components/ui/loader";
 
+// Definición de la interfaz de usuario
 interface User {
   id: string;
   name: string;
 }
 
+// Definición de la interfaz de datos obtenidos para usuarios
 interface GetUsersData {
   users: User[];
 }
 
+// Definición de la interfaz de transacción
 interface Transaction {
   id: string;
   type: string;
@@ -40,17 +43,20 @@ interface Transaction {
 
 const CreateTransactionForm: React.FC = () => {
   const { refetch } = useQuery<{ transactions: Transaction[] }>(
-    GET_TRANSACTIONS
+    GET_TRANSACTIONS // Query para refrescar las transacciones después de crear una nueva
   );
 
+  // Query para obtener la lista de usuarios
   const {
     data,
     loading: usersLoading,
     error: usersError,
   } = useQuery<GetUsersData>(GET_USERS);
 
+  // Mutation para crear una nueva transacción
   const [createTransaction, { loading }] = useMutation(CREATE_TRANSACTION);
 
+  // Estado del formulario
   const [form, setForm] = useState({
     userId: "",
     type: "Ingreso",
@@ -58,12 +64,14 @@ const CreateTransactionForm: React.FC = () => {
     date: "",
   });
 
+  // Establece el usuario por defecto en el formulario al cargar los datos de usuarios
   useEffect(() => {
     if (data && data.users && data.users.length > 0) {
       setForm((prevForm) => ({ ...prevForm, userId: data.users[0].id }));
     }
   }, [data]);
 
+  // Maneja los cambios en los inputs del formulario
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -73,6 +81,7 @@ const CreateTransactionForm: React.FC = () => {
     });
   };
 
+  // Maneja el envío del formulario
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -85,6 +94,7 @@ const CreateTransactionForm: React.FC = () => {
         },
       });
 
+      // Alerta de éxito al crear la transacción
       Swal.fire({
         icon: "success",
         title: "¡Transacción creada exitosamente!",
@@ -93,15 +103,18 @@ const CreateTransactionForm: React.FC = () => {
         timer: 4000,
       });
 
+      // Reinicia el formulario después de guardar la transacción
       setForm({
         userId:
-          data && data.users && data.users.length > 0 ? data.users[0].id : "", // Puedes dejar vacío o preseleccionar
+          data && data.users && data.users.length > 0 ? data.users[0].id : "", // Preselección del usuario si existe
         type: "Ingreso",
         amount: "",
         date: "",
       });
     } catch (err) {
       console.error("Error creating transaction:", err);
+
+      // Alerta de error en caso de fallo
       Swal.fire({
         icon: "error",
         title: "Error",
@@ -112,8 +125,8 @@ const CreateTransactionForm: React.FC = () => {
     }
   };
 
-  if (usersLoading) return <p>Cargando usuarios...</p>;
-  if (usersError) return <p>Error cargando usuarios, recargar la página: {usersError.message}</p>;
+  if (usersLoading) return <p>Cargando usuarios...</p>; // Indicador de carga mientras se obtienen los usuarios
+  if (usersError) return <p>Error cargando usuarios, recargar la página: {usersError.message}</p>; // Muestra el error si ocurre alguno al cargar los usuarios
 
   return (
     <Sheet>
@@ -216,7 +229,7 @@ const CreateTransactionForm: React.FC = () => {
 
                 <div className="flex justify-center">
                   <Button
-                    onClick={() => refetch()}
+                    onClick={() => refetch()} // Refresca las transacciones al guardar una nueva
                     className="w-auto mx-auto focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-6"
                     type="submit"
                   >
@@ -236,7 +249,7 @@ const CreateTransactionForm: React.FC = () => {
         </div>
 
         <SheetFooter>
-          <SheetClose asChild></SheetClose>
+          <SheetClose asChild></SheetClose> {/* Cierre del modal tipo sheet */}
         </SheetFooter>
       </SheetContent>
     </Sheet>

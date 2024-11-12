@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Header from "@/components/header";
-import { BreadIncoUser } from "@/components/breadcrumb";
+import { BreadIncoUser } from "@/components/breadcrumb"; // Componente de ruta de navegación
 import { useQuery, useMutation } from "@apollo/client";
 import {
   Table,
@@ -10,8 +10,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { GET_USERS_LIST, UPDATE_USER } from "../../graphql/index";
+} from "@/components/ui/table"; // Componentes de tabla de UI
+import { GET_USERS_LIST, UPDATE_USER } from "../../graphql/index"; // Queries y mutations para obtener y actualizar usuarios
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { EditUserIcon, RefreshIcon } from "@/components/ui/icons";
@@ -21,12 +21,13 @@ import {
   SheetContent,
   SheetFooter,
   SheetTrigger,
-} from "@/components/ui/sheet";
+} from "@/components/ui/sheet"; // Componentes de UI para modal tipo sheet
 import Swal from "sweetalert2";
 import Loader from "@/components/ui/loader";
 import { Label } from "@/components/ui/label";
 import { UserIcon } from "@/components/ui/icons";
 
+// Definición de la interfaz de usuario
 interface User {
   id: string;
   name: string;
@@ -37,14 +38,16 @@ interface User {
 
 const Users = () => {
   const { data, loading, refetch, error } = useQuery<{ users: User[] }>(
-    GET_USERS_LIST
+    GET_USERS_LIST // Query para obtener la lista de usuarios
   );
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const [role, setRole] = useState("");
-  const [name, setName] = useState("");
-  const [loadings, setloadings] = useState(false);
-  const [updateUser] = useMutation(UPDATE_USER);
-  const [userSearch, setUserSearch] = useState("");
+  const [selectedUser, setSelectedUser] = useState<User | null>(null); // Estado del usuario seleccionado para editar
+  const [role, setRole] = useState(""); // Estado del rol del usuario seleccionado
+  const [name, setName] = useState(""); // Estado del nombre del usuario seleccionado
+  const [loadings, setloadings] = useState(false); // Estado de carga para el botón de guardar
+  const [updateUser] = useMutation(UPDATE_USER); // Mutation para actualizar un usuario
+  const [userSearch, setUserSearch] = useState(""); // Estado para el filtro de búsqueda de usuario
+
+  // Maneja la actualización de la lista de usuarios y el guardado de cambios
   const handleCombinedClick = async () => {
     setloadings(true);
     try {
@@ -60,19 +63,21 @@ const Users = () => {
     }
   };
 
-  const [isClicked, setIsClicked] = useState(false);
+  const [isClicked, setIsClicked] = useState(false); // Estado para la animación de carga en el botón de refrescar
   const handleClick = async () => {
     setIsClicked(true);
-    await refetch();
+    await refetch(); // Refresca los datos al hacer clic
     setIsClicked(false);
   };
 
+  // Maneja la edición de un usuario seleccionado
   const handleEditClick = (user: User) => {
     setSelectedUser(user);
     setRole(user.role);
     setName(user.name);
   };
 
+  // Guarda los cambios realizados en el usuario seleccionado
   const handleSave = async () => {
     if (selectedUser) {
       try {
@@ -95,7 +100,7 @@ const Users = () => {
               : "Ocurrió un error desconocido",
         });
       } finally {
-        setSelectedUser(null);
+        setSelectedUser(null); // Cierra el modal después de guardar los cambios
       }
     }
   };
@@ -103,7 +108,7 @@ const Users = () => {
   if (loading)
     return (
       <div className="h-screen flex items-center justify-center">
-        <Loader outerWidth="100" outerHeight="100" innerScale={0.7} />
+        <Loader outerWidth="100" outerHeight="100" innerScale={0.7} /> {/* Indicador de carga */}
       </div>
     );
 
@@ -117,6 +122,8 @@ const Users = () => {
       </div>
     );
   }
+
+  // Filtra los usuarios según el término de búsqueda
   const filteredUsers = data?.users.filter(
     (user) =>
       userSearch === "" ||
@@ -155,12 +162,13 @@ const Users = () => {
             >
               <RefreshIcon /> Actualizar{" "}
               {isClicked && (
-                <Loader outerWidth="25" outerHeight="25" innerScale={0.7} />
+                <Loader outerWidth="25" outerHeight="25" innerScale={0.7} /> 
               )}
             </Button>
           </div>
         </div>
 
+        {/* Tabla de usuarios */}
         <div className=" max-h-[50vh] mt-8 overflow-y-auto">
           <Table className="w-full">
             <TableHeader>
@@ -264,7 +272,7 @@ const Users = () => {
                                     onClick={handleCombinedClick}
                                     className="w-40 mx-auto focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-6"
                                     type="submit"
-                                    disabled={loadings} // Opcional: desactiva el botón mientras carga
+                                    disabled={loadings} // Desactiva el botón mientras carga
                                   >
                                     {loadings && (
                                       <Loader
@@ -280,7 +288,7 @@ const Users = () => {
                             </div>
                           </div>
                           <SheetFooter>
-                            <SheetClose asChild></SheetClose>
+                            <SheetClose asChild></SheetClose> {/* Cierre del modal tipo sheet */}
                           </SheetFooter>
                         </SheetContent>
                       </Sheet>
