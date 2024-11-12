@@ -107,6 +107,7 @@ Este proyecto está preparado para ser desplegado en **Vercel**, una plataforma 
 - **TailwindCSS**: Framework de utilidades para estilos.
 - **Shadcn**: Componentes UI accesibles.
 - **Jest** y **Testing Library**: Para pruebas unitarias e integración.
+- **Authjs** con **Auth0** para autenticación.
 
 ## Pruebas unitarias
 
