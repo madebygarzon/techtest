@@ -31,7 +31,7 @@ Asegúrate de tener instalado lo siguiente en tu sistema:
 
 3. **Configura el entorno**:
 
-    Crea un archivo `.env` en la raíz del proyecto con las variables de entorno necesarias. Aquí hay algunas variables que probablemente necesites:
+    Crea un archivo `.env` en la raíz del proyecto con las variables de entorno necesarias, puedes usar el archivo .env.example como guía. Aquí hay algunas variables que probablemente necesites:
 
     ```env
     DATABASE_URL=<tu_url_de_base_de_datos>
