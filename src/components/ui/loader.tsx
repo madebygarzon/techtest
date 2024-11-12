@@ -6,7 +6,7 @@ const Loader = ({ outerWidth = "20", outerHeight = "20", innerScale = 0.8 }) => 
 
   return (
     <div>
-      <div className="flex-col gap-4 w-full flex items-center justify-center">
+      <div data-testid="loader-spinner" className="flex-col gap-4 w-full flex items-center justify-center">
         <div
           style={{
             width: `${outerWidth}px`,

@@ -5,4 +5,4 @@ global.fetch = jest.fn(() =>
       json: () => Promise.resolve({}),
     })
   ) as jest.Mock;
-  
+

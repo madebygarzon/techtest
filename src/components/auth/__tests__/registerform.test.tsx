@@ -19,6 +19,14 @@ jest.mock("bcryptjs", () => ({
   hash: jest.fn(() => Promise.resolve("hashedPassword")), // Mockea el hash
 }));
 
+beforeAll(() => {
+  Object.defineProperty(window, "location", {
+    configurable: true,
+    writable: true,
+    value: { href: "" },
+  });
+});
+
 describe("RegisterForm Component", () => {
   const mocks = [
     {

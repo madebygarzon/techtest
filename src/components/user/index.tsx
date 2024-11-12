@@ -36,7 +36,9 @@ interface User {
 }
 
 const Users = () => {
-  const { data, loading, refetch } = useQuery<{ users: User[] }>(GET_USERS_LIST);
+  const { data, loading, refetch, error } = useQuery<{ users: User[] }>(
+    GET_USERS_LIST
+  );
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [role, setRole] = useState("");
   const [name, setName] = useState("");
@@ -54,7 +56,7 @@ const Users = () => {
     } catch (error) {
       console.error("Error en el proceso:", error);
     } finally {
-      setloadings(false); 
+      setloadings(false);
     }
   };
 
@@ -104,6 +106,17 @@ const Users = () => {
         <Loader outerWidth="100" outerHeight="100" innerScale={0.7} />
       </div>
     );
+
+  if (error) {
+    return (
+      <div
+        className="flex items-center justify-center text-red-500"
+        role="alert"
+      >
+        Error en la consulta: {error.message}
+      </div>
+    );
+  }
   const filteredUsers = data?.users.filter(
     (user) =>
       userSearch === "" ||
@@ -152,8 +165,12 @@ const Users = () => {
           <Table className="w-full">
             <TableHeader>
               <TableRow className="hover:bg-[#cecece2c] dark:hover:bg-[#3030302c] border-b border-gray-500">
-                <TableHead className="text-slate-600 dark:text-[#e0e0e0] text-lg">Nombre</TableHead>
-                <TableHead className="text-slate-600 dark:text-[#e0e0e0] text-lg">Email</TableHead>
+                <TableHead className="text-slate-600 dark:text-[#e0e0e0] text-lg">
+                  Nombre
+                </TableHead>
+                <TableHead className="text-slate-600 dark:text-[#e0e0e0] text-lg">
+                  Email
+                </TableHead>
                 <TableHead className="text-slate-600 dark:text-[#e0e0e0] text-lg">
                   Teléfono
                 </TableHead>
@@ -227,13 +244,13 @@ const Users = () => {
                                     onChange={(e) => setRole(e.target.value)}
                                     className="dark:bg-secondary bg-slate-100 text-slate-600 dark:text-[#e0e0e0] border rounded-lg px-3 py-2 mb-5 text-sm w-full outline-none dark:border-gray-500 "
                                   >
-                                    <option                                      
+                                    <option
                                       value="User"
                                       className="dark:bg-secondary bg-slate-100 text-slate-600 dark:text-[#e0e0e0]"
                                     >
                                       User
                                     </option>
-                                    <option                                      
+                                    <option
                                       value="Admin"
                                       className="dark:bg-secondary bg-slate-100 text-slate-600 dark:text-[#e0e0e0]"
                                     >
@@ -272,9 +289,9 @@ const Users = () => {
                 ))}
               </TableBody>
             ) : (
-              <p className="h-10 flex items-center justify-center">
+              <div className="h-10 flex items-center justify-center text-gray-500">
                 ¡Usuario no encontrado!
-              </p>
+              </div>
             )}
             <TableFooter></TableFooter>
           </Table>

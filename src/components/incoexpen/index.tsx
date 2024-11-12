@@ -211,9 +211,9 @@ const Transactions = () => {
                 ))}
               </TableBody>
             ) : (
-              <p className="h-10 flex items-center justify-center">
+              <div className="h-10 flex items-center justify-center">
                 ¡No se encontraron transacciones!
-              </p>
+              </div>
             )}
 
             <TableFooter className="hover:bg-[#cecece2c] dark:hover:bg-[#3030302c] bg-transparent pt-4">
