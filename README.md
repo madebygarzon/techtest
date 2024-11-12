@@ -115,12 +115,12 @@ Este proyecto implementa un conjunto de pruebas unitarias utilizando **Jest** y 
 
 ## Ejecución de Pruebas
 
-Para ejecutar las pruebas unitarias, utiliza el comando:
-
+1. Para ejecutar las pruebas unitarias, utiliza el comando:
 
     ```bash
     npm test
     ```
+
 Este comando ejecutará automáticamente todas las pruebas ubicadas en los directorios designados para pruebas. Las pruebas específicas actualmente incluidas en el proyecto se encuentran en:
 
 `src/components/user/__tests__/getuser.test.tsx`
