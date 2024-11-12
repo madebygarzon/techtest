@@ -125,7 +125,7 @@ const Reports = () => {
               <div className="mb-2 flex gap-1 items-center ">
                 <span className=" h-3 w-3 rounded-full bg-[#3DAC66] opacity-75"></span>
                 <div className="text-slate-600 dark:text-[#e0e0e0] ">
-                saldo: ${saldo.toLocaleString()}
+                Saldo: ${saldo.toLocaleString()}
                 </div>
               </div>
               

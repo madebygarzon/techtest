@@ -4,6 +4,8 @@
 
 **TechTest** Es un proyecto que hace parte de una prueba técnica que busca evaluar las habilidades de desarrollo en una aplicación fullstack. Está basado en **Next.js** y utiliza varias bibliotecas y herramientas para la gestión de usuarios y movimientos financieros, tales como **Prisma**, **Apollo Server**, **NextAuth**, y **TailwindCSS**. Este proyecto está configurado para desarrollarse en local y para ser fácilmente desplegado en **Vercel**.
 
+**TechTest** es un proyecto diseñado como parte de una evaluación técnica orientada a medir habilidades en el desarrollo de aplicaciones fullstack. Construido sobre **Next.js** y **TypeScript**, integra una serie de bibliotecas y herramientas avanzadas, entre las que destacan **Prisma**, **Apollo** **Server**, **NextAuth** y **TailwindCSS**, para la gestión de usuarios y el control de movimientos financieros. La configuración de TechTest facilita tanto el desarrollo en un entorno local como su despliegue rápido y sencillo en Vercel.
+
 ## Requisitos previos
 
 Asegúrate de tener instalado lo siguiente en tu sistema:
@@ -17,7 +19,7 @@ Asegúrate de tener instalado lo siguiente en tu sistema:
 1. **Clona el repositorio**:
 
     ```bash
-    git clone <URL-del-repositorio>
+    git clone https://github.com/madebygarzon/techtest.git
     cd techtest
     ```
 
@@ -40,7 +42,8 @@ Asegúrate de tener instalado lo siguiente en tu sistema:
     NEXT_PUBLIC_SUPABASE_URL=<url_del_proyecto_de_supabase>
     NEXT_PUBLIC_SUPABASE_ANON_KEY=<tu_clave_de_supabase>
     AUTH0_CLIENT_ID=<tu_id_de_cliente_de_auth0>
-    AUTH0_CLIENT_SECRET=AUTH0_ISSUER=<tu_issuer_de_auth0>
+    AUTH0_CLIENT_SECRET=<tu_secreto_de_auth0>
+    AUTH0_ISSUER=<tu_issuer_de_auth0>
     AUTH0_BASE_URL=<tu_url_base_de_auth0>
     NODE_ENV=<url_del_proyecto>
     ```
@@ -104,7 +107,7 @@ Este proyecto está preparado para ser desplegado en **Vercel**, una plataforma 
 - **Apollo Server**: Para el manejo de GraphQL.
 - **NextAuth**: Autenticación para Next.js.
 - **TailwindCSS**: Framework de utilidades para estilos.
-- **Radix UI** y **NextUI**: Componentes UI accesibles.
+- **Shadcn**: Componentes UI accesibles.
 - **Jest** y **Testing Library**: Para pruebas unitarias e integración.
 
 ## Pruebas unitarias
