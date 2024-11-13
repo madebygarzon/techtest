@@ -151,7 +151,7 @@ const Users = () => {
                 type="text"
                 value={userSearch}
                 onChange={(e) => setUserSearch(e.target.value)}
-                placeholder="Filtrar por Usuario"
+                placeholder="Filtrar por usuario"
                 className="ww-64 h-9 pl-12 placeholder:text-slate-600 dark:placeholder:text-[#e0e0e0]  bg-transparent text-slate-600 dark:text-[#e0e0e0] border border-slate-400  sm:text-sm rounded-lg ring ring-transparent focus:ring-1 focus:outline-none focus:ring-gray-400 block  p-2.5 py-3 px-4"
               />
             </div>
