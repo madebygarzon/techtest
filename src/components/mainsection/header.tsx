@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import Logo from "../../../public/assets/logo-prevalentware.png";
+import Logo from "../../../public/assets/logo_byGarzon.png";
 
 const HeaderSideBar = () => {
   return (
@@ -8,7 +8,7 @@ const HeaderSideBar = () => {
       <Image
         src={Logo}
         alt="PrevalentWare"
-        width={235}
+        width={180}
         className="flex items-center justify-center ml-4 my-4 cursor-pointer"
       />
     </div>
